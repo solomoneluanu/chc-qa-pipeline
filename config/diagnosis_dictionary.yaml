@@ -1,0 +1,60 @@
+cytology_raw_to_canonical:
+  NILM: NILM
+  "Negative for intraepithelial lesion or malignancy": NILM
+  "No intraepithelial lesion": NILM
+  "Negative cytology": NILM
+
+  "OTHER (EMC45)": "OTHER (EMC45)"
+  "Endometrial cells": "OTHER (EMC45)"
+  "Benign endometrial cells": "OTHER (EMC45)"
+
+  "ASC-US": "ASC-US"
+  "Atypical squamous cells of undetermined significance": "ASC-US"
+  "Atypical squamous cells": "ASC-US"
+
+  LSIL: LSIL
+  "Low-grade squamous intraepithelial lesion": LSIL
+  "Low grade lesion": LSIL
+
+  AGC: AGC
+  "Atypical glandular cells": AGC
+
+  AGC-ECX: AGC-ECX
+  AGC-EMC: AGC-EMC
+
+  HSIL: HSIL
+  "High-grade squamous intraepithelial lesion": HSIL
+  "High grade lesion": HSIL
+
+  "ASC-H": "ASC-H"
+  "Cannot exclude HSIL": "ASC-H"
+
+  AGC-NEO: AGC-NEO
+  "AGC-ECX/EMC NEO": "AGC-ECX/EMC NEO"
+
+  AIS: AIS
+  MALIGNANT: MALIGNANT
+
+histology_raw_to_canonical:
+  "Benign / Inflammatory (Negative)": "Benign / Inflammatory (Negative)"
+  Negative: "Benign / Inflammatory (Negative)"
+  Benign: "Benign / Inflammatory (Negative)"
+  "Benign tissue": "Benign / Inflammatory (Negative)"
+  "Benign findings": "Benign / Inflammatory (Negative)"
+
+  "LSIL (CIN1)": "LSIL (CIN1)"
+  CIN1: "LSIL (CIN1)"
+  "Low grade lesion": "LSIL (CIN1)"
+
+  "HSIL (CIN2)": "HSIL (CIN2)"
+  CIN2: "HSIL (CIN2)"
+  "Moderate dysplasia": "HSIL (CIN2)"
+
+  "HSIL (CIN3)": "HSIL (CIN3)"
+  CIN3: "HSIL (CIN3)"
+  "Severe dysplasia": "HSIL (CIN3)"
+
+  "Squamous Cell Carcinoma": "Squamous Cell Carcinoma"
+  SCC: "Squamous Cell Carcinoma"
+
+  Adenocarcinoma: Adenocarcinoma
