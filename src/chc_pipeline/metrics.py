@@ -1,4 +1,3 @@
-%%writefile src/chc_pipeline/metrics.py
 import pandas as pd
 
 
