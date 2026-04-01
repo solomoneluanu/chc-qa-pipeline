@@ -20,7 +20,13 @@ The pipeline:
 
 ## Requirements
 
-Install dependencies:
+ Add `requirements.txt`
 
-```bash
-pip install -r requirements.txt
+Create this:
+
+```txt
+pandas
+openpyxl
+pyyaml
+matplotlib
+reportlab
