@@ -21,14 +21,23 @@ def _ensure_output_dir(output_dir: str) -> None:
 
 def plot_concordance(results: dict, output_dir: str) -> None:
     """
-    Plot concordance class distribution.
+    Plot concordance class distribution with clinical color coding.
     """
     _ensure_output_dir(output_dir)
 
     df = results["concordance_table"].copy()
 
+    color_map = {
+        "concordant": "green",
+        "minor_discordant": "orange",
+        "major_discordant": "red",
+        "unmapped": "gray"
+    }
+
+    colors = [color_map.get(x, "gray") for x in df["Concordance_Class"]]
+
     plt.figure(figsize=(7, 4.5))
-    bars = plt.bar(df["Concordance_Class"], df["Count"])
+    bars = plt.bar(df["Concordance_Class"], df["Count"], color=colors)
 
     plt.title("Concordance Distribution")
     plt.ylabel("Number of Cases")
@@ -57,8 +66,20 @@ def plot_subtypes(results: dict, output_dir: str) -> None:
     df = results["subtype_table"].copy()
     df = df.sort_values("Count", ascending=True)
 
+    subtype_color_map = {
+        "exact_agreement": "green",
+        "minor_variance": "orange",
+        "minor_undercall": "orange",
+        "minor_overcall": "orange",
+        "major_undercall": "red",
+        "major_overcall": "red",
+        "unmapped": "gray"
+    }
+
+    colors = [subtype_color_map.get(x, "gray") for x in df["Discordance_Subtype"]]
+
     plt.figure(figsize=(8, 5))
-    bars = plt.barh(df["Discordance_Subtype"], df["Count"])
+    bars = plt.barh(df["Discordance_Subtype"], df["Count"], color=colors)
 
     plt.title("Discordance Subtype Distribution")
     plt.xlabel("Number of Cases")
@@ -95,7 +116,6 @@ def plot_confusion_matrix(results: dict, output_dir: str) -> None:
     plt.xticks(range(len(cm.columns)), cm.columns, rotation=45, ha="right")
     plt.yticks(range(len(cm.index)), cm.index)
 
-    # annotate cells
     for i in range(len(cm.index)):
         for j in range(len(cm.columns)):
             value = cm.iloc[i, j]
@@ -117,8 +137,19 @@ def plot_discrepancy_buckets(results: dict, output_dir: str) -> None:
 
     df = results["bucket_table"].copy()
 
+    bucket_color_map = {
+        "Agree": "green",
+        "MinVar": "orange",
+        "MinUnd": "orange",
+        "MinOver": "orange",
+        "MajUnd": "red",
+        "MajOver": "red"
+    }
+
+    colors = [bucket_color_map.get(x, "gray") for x in df["Bucket"]]
+
     plt.figure(figsize=(8, 4.8))
-    bars = plt.bar(df["Bucket"], df["Count"])
+    bars = plt.bar(df["Bucket"], df["Count"], color=colors)
 
     plt.title("Cytology-Histology Correlations")
     plt.ylabel("Number of Cases")
@@ -156,8 +187,10 @@ def plot_hsil_metrics(results: dict, output_dir: str) -> None:
         results.get("hsil_major_fp_pct", 0) or 0,
     ]
 
+    colors = ["green", "orange", "red"]
+
     plt.figure(figsize=(7, 4.5))
-    bars = plt.bar(labels, values)
+    bars = plt.bar(labels, values, color=colors)
 
     plt.title("HSIL Correlation Metrics (%)")
     plt.ylabel("Percentage")
@@ -175,7 +208,6 @@ def plot_hsil_metrics(results: dict, output_dir: str) -> None:
     plt.tight_layout()
     plt.savefig(f"{output_dir}/hsil_metrics.png", bbox_inches="tight")
     plt.close()
-
 
 
 def generate_all_figures(results: dict, classified_df: pd.DataFrame, output_dir: str) -> None:
