@@ -1,11 +1,13 @@
-# Ignore outputs
+# Output files
 data/output/
 
-# Figures and reports
-*.png
-*.pdf
-*.txt
+# Generated figures and reports (only inside output)
+data/output/*.png
+data/output/*.pdf
 
 # Python cache
 __pycache__/
 *.pyc
+
+# Environment
+.env
