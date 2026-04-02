@@ -13,13 +13,13 @@ from src.chc_pipeline.pdf_report import build_pdf_report
 
 
 def main():
-    input_file = "data/Evalution01.xlsx"
+    input_file = "data/input-data/Evalution01.xlsx"
     dictionary_file = "config/diagnosis_dictionary.yaml"
     rules_file = "config/discrepancy_rules.csv"
 
-    output_excel = "data/output/chc_report.xlsx"
-    output_pdf = "data/output/chc_report.pdf"
-    figure_dir = "data/output/figures"
+    output_excel = "data/output-data/chc_report.xlsx"
+    output_pdf = "data/output-data/chc_report.pdf"
+    figure_dir = "data/output-data/figures"
 
     os.makedirs("data/output", exist_ok=True)
     os.makedirs(figure_dir, exist_ok=True)
