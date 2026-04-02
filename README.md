@@ -18,9 +18,32 @@ The pipeline:
 - `scripts/run_pipeline.py` - end-to-end pipeline runner
 - `data/` - input and output files
 
+## Data
+
+The `data/` directory contains example input data for demonstration and testing.
+
+- `data/input/evaluation_01_input.xlsx` — sample dataset formatted as LIS export
+
+Users can run the pipeline on this file to reproduce results.
+
+All outputs (Excel reports, figures, and PDF summaries) will be automatically generated in:
+
+- `data/output/`
+
+No real patient data is included.
+
+## Usage
+
+Run the pipeline with:
+
+```bash
+python scripts/run_pipeline.py
+
 ## Requirements
 
-Install dependencies from `requirements.txt`:
+This project requires Python 3.9 or higher.
+
+Install dependencies using:
 
 ```bash
 pip install -r requirements.txt
