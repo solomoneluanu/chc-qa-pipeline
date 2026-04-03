@@ -17,7 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description="Run CHC-QA pipeline")
     parser.add_argument(
         "--input",
-        default="data/input-data/Evalution01.xlsx",
+        default="data/input-data/evalution01.xlsx",
         help="Path to input Excel file"
     )
     args = parser.parse_args()
