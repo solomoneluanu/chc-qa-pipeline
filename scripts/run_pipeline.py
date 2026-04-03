@@ -1,6 +1,7 @@
 import sys
 import os
 import pandas as pd
+import argparse  
 
 sys.path.append(os.getcwd())
 
@@ -13,7 +14,16 @@ from src.chc_pipeline.pdf_report import build_pdf_report
 
 
 def main():
-    input_file = "data/input-data/Evalution01.xlsx"
+    parser = argparse.ArgumentParser(description="Run CHC-QA pipeline")
+    parser.add_argument(
+        "--input",
+        default="data/input-data/Evalution01.xlsx",
+        help="Path to input Excel file"
+    )
+    args = parser.parse_args()
+
+    input_file = args.input  
+
     dictionary_file = "config/diagnosis_dictionary.yaml"
     rules_file = "config/discrepancy_rules.csv"
 
