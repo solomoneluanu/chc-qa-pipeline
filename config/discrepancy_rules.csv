@@ -43,7 +43,7 @@ OTHER (EMC45),LSIL (CIN1),minor_discordant,minor_variance,variance,minor
 ASC-US,Benign / Inflammatory (Negative),minor_discordant,minor_variance,variance,minor
 AIS,HSIL (CIN2),minor_discordant,minor_variance,variance,minor
 AIS,HSIL (CIN3),minor_discordant,minor_variance,variance,minor
-AIS,squamous Cell Carcinoma,minor_discordant,minor_variance,variance,minor
+AIS,Squamous Cell Carcinoma,minor_discordant,minor_variance,variance,minor
 ASC-H,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
 
 
