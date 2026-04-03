@@ -38,7 +38,7 @@ HSIL,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
 MALIGNANT,HSIL (CIN2),minor_discordant,minor_overcall,overcall,minor
 MALIGNANT,HSIL (CIN3),minor_discordant,minor_overcall,overcall,minor
 AGC-NEO,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
-AGC-EX,Benign / Inflammatory,minor_discordant,minor_overcall,overcall,minor
+AGC-ECX,Benign / Inflammatory,minor_discordant,minor_overcall,overcall,minor
 OTHER (EMC45),LSIL (CIN1),minor_discordant,minor_variance,variance,minor
 ASC-US,Benign / Inflammatory (Negative),minor_discordant,minor_variance,variance,minor
 AIS,HSIL (CIN2),minor_discordant,minor_variance,variance,minor
