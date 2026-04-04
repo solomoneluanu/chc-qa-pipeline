@@ -55,6 +55,7 @@ AIS,Squamous Cell Carcinoma,minor_discordant,minor_variance,variance,minor
 ASC-H,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
 AGC-ECX,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
 AGC-ECX,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
+AGC,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
 
 NILM,HSIL (CIN2),major_discordant,major_undercall,undercall,major
 NILM,HSIL (CIN3),major_discordant,major_undercall,undercall,major
