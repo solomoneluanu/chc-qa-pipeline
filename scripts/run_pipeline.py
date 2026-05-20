@@ -1,68 +1,102 @@
-import sys
+﻿import sys
 import os
 import pandas as pd
-import argparse  
+import argparse
 
 sys.path.append(os.getcwd())
 
-from src.chc_pipeline.normalize import normalize_diagnoses
-from src.chc_pipeline.classify import classify_pairs
-from src.chc_pipeline.metrics import compute_metrics
-from src.chc_pipeline.export import export_results
-from src.chc_pipeline.visualize import generate_all_figures
-from src.chc_pipeline.pdf_report import build_pdf_report
+from src.chc_pipeline.ingest        import load_combined_excel
+from src.chc_pipeline.llm_normalizer import normalize_cyto_sheet, normalize_histo_sheet
+from src.chc_pipeline.pairer        import pair_cases
+from src.chc_pipeline.normalize     import normalize_diagnoses
+from src.chc_pipeline.classify      import classify_pairs
+from src.chc_pipeline.metrics       import compute_metrics
+from src.chc_pipeline.export        import export_results
+from src.chc_pipeline.visualize     import generate_all_figures
+from src.chc_pipeline.pdf_report    import build_pdf_report
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run CHC-QA pipeline")
-    parser.add_argument(
-        "--input",
-        default="data/input-data/Evalution05.xlsx",
-        help="Path to input Excel file"
-    )
+    parser.add_argument("--input",  default="data/input-data/real_lab_simulation.xlsx")
+    parser.add_argument("--mode",   choices=["real", "eval"], default="real")
+    parser.add_argument("--window", type=int, default=180)
     args = parser.parse_args()
 
-    input_file = args.input  
-
     dictionary_file = "config/diagnosis_dictionary.yaml"
-    rules_file = "config/discrepancy_rules.csv"
+    rules_file      = "config/discrepancy_rules.csv"
+    output_excel    = "data/output-data/chc_report.xlsx"
+    output_pdf      = "data/output-data/chc_report.pdf"
+    figure_dir      = "data/output-data/figures"
 
-    output_excel = "data/output-data/chc_report.xlsx"
-    output_pdf = "data/output-data/chc_report.pdf"
-    figure_dir = "data/output-data/figures"
+    os.makedirs("data/output-data", exist_ok=True)
+    os.makedirs(figure_dir,         exist_ok=True)
 
-    os.makedirs("data/output", exist_ok=True)
-    os.makedirs(figure_dir, exist_ok=True)
+    print("\nCHC-QA PIPELINE")
+    print(f"Input : {args.input}")
+    print(f"Mode  : {args.mode}\n")
 
-    # Step 1: Load data
-    df = pd.read_excel(input_file)
+    if args.mode == "real":
 
-    required_columns = ["Cytology_Diagnosis", "Histology_Diagnosis"]
-    missing = [col for col in required_columns if col not in df.columns]
-    if missing:
-        raise ValueError(f"Missing required columns: {missing}")
+        print("STEP 1: Ingesting sheets...")
+        cyto_df, histo_df = load_combined_excel(args.input)
 
-    # Step 2: Normalize
+        if cyto_df is None or histo_df is None:
+            raise ValueError("Could not load sheets.")
+
+        print("\nSTEP 2: Normalizing cytology via LLM...")
+        cyto_df = normalize_cyto_sheet(
+            cyto_df,
+            raw_diag_col="raw_diag",
+            dictionary_path=dictionary_file
+        )
+
+        print("\nSTEP 2b: Normalizing histology via LLM...")
+        histo_df = normalize_histo_sheet(
+            histo_df,
+            raw_diag_col="raw_diag",
+            dictionary_path=dictionary_file
+        )
+
+        print(f"\nSTEP 3: Pairing cases (window={args.window} days)...")
+        paired_df, unmatched_df = pair_cases(cyto_df, histo_df, window_days=args.window)
+
+        if len(paired_df) == 0:
+            raise ValueError("No cases paired.")
+
+        unmatched_df.to_excel("data/output-data/unmatched_cases.xlsx", index=False)
+        print(f"  Unmatched saved: data/output-data/unmatched_cases.xlsx")
+
+        df = paired_df.copy()
+
+    else:
+        print("STEP 1-3: Loading pre-paired evaluation data...")
+        df = pd.read_excel(args.input)
+        required = ["Cytology_Diagnosis", "Histology_Diagnosis"]
+        missing  = [c for c in required if c not in df.columns]
+        if missing:
+            raise ValueError(f"Missing columns: {missing}")
+
+    print("\nSTEP 5: Dictionary normalization...")
     df = normalize_diagnoses(df, dictionary_file)
 
-    # Step 3: Classify
+    print("\nSTEP 6: Classifying...")
     classified_df = classify_pairs(df, rules_file)
 
-    # Step 4: Metrics
+    print("\nSTEP 7: Computing metrics...")
     results = compute_metrics(classified_df)
 
-    # Step 5: Export Excel
+    print("\nSTEP 8: Exporting Excel...")
     export_results(classified_df, results, output_excel)
 
-    # Step 6: Visualization
+    print("\nSTEP 9: Generating figures...")
     generate_all_figures(results, classified_df, figure_dir)
 
-    # Step 7: PDF Report
+    print("\nSTEP 10: Building PDF...")
     summary_text = (
         f"A total of {results.get('total_cases')} cases were analyzed using a "
         f"deterministic cytology-histology correlation QA pipeline."
     )
-
     build_pdf_report(
         results=results,
         figure_dir=figure_dir,
@@ -70,9 +104,9 @@ def main():
         summary_text=summary_text
     )
 
-    print("Pipeline completed successfully.")
-    print(f"Excel report: {output_excel}")
-    print(f"PDF report: {output_pdf}")
+    print("\nPipeline completed successfully.")
+    print(f"Excel : {output_excel}")
+    print(f"PDF   : {output_pdf}")
 
 
 if __name__ == "__main__":

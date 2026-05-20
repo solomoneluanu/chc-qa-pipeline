@@ -12,63 +12,72 @@ ASC-H,HSIL (CIN2),concordant,exact_agreement,matched,exact
 ASC-H,HSIL (CIN3),concordant,exact_agreement,matched,exact
 AGC-NEO,HSIL (CIN2),concordant,exact_agreement,matched,exact
 AGC-NEO,HSIL (CIN3),concordant,exact_agreement,matched,exact
+AGC-NEO,Adenocarcinoma,concordant,exact_agreement,matched,exact
+AGC-ECX/EMC NEO,HSIL (CIN2),concordant,exact_agreement,matched,exact
+AGC-ECX/EMC NEO,HSIL (CIN3),concordant,exact_agreement,matched,exact
+AGC-ECX/EMC NEO,Adenocarcinoma,concordant,exact_agreement,matched,exact
 MALIGNANT,Squamous Cell Carcinoma,concordant,exact_agreement,matched,exact
 MALIGNANT,Adenocarcinoma,concordant,exact_agreement,matched,exact
-
+AIS,AIS,concordant,exact_agreement,matched,exact
 NILM,LSIL (CIN1),minor_discordant,minor_undercall,undercall,minor
 ASC-US,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
 ASC-US,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
+ASC-US,AIS,major_discordant,major_undercall,undercall,major
 LSIL,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
 LSIL,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
 LSIL,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
 LSIL,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC-EMC,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-HSIL,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
-ASC-H,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC-NEO,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
-HSIL,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-ASC-H,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC-NEO,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-AIS,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC-EMC,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
-OTHER (EMC45),Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-LSIL,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
-HSIL,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
-MALIGNANT,HSIL (CIN2),minor_discordant,minor_overcall,overcall,minor
-MALIGNANT,HSIL (CIN3),minor_discordant,minor_overcall,overcall,minor
-AGC-NEO,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
-AGC-ECX,Benign / Inflammatory,minor_discordant,minor_overcall,overcall,minor
-AGC-EMC,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
-AGC-ECX,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
-AGC-NEO,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
-AGC-EMC,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
+LSIL,AIS,minor_discordant,minor_undercall,undercall,minor
 AGC,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
 AGC,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
-AGC-ECX,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
-AGC-ECX,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
-OTHER (EMC45),LSIL (CIN1),minor_discordant,minor_variance,variance,minor
-ASC-US,Benign / Inflammatory (Negative),minor_discordant,minor_variance,variance,minor
-AIS,HSIL (CIN2),minor_discordant,minor_variance,variance,minor
-AIS,HSIL (CIN3),minor_discordant,minor_variance,variance,minor
-AIS,Squamous Cell Carcinoma,minor_discordant,minor_variance,variance,minor
-ASC-H,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
+AGC,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
 AGC-ECX,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
 AGC-ECX,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
-AGC,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
-
+AGC-ECX,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC-ECX,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC-EMC,HSIL (CIN2),minor_discordant,minor_undercall,undercall,minor
+AGC-EMC,HSIL (CIN3),minor_discordant,minor_undercall,undercall,minor
+AGC-EMC,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC-EMC,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC-NEO,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+AGC-ECX/EMC NEO,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+HSIL,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+HSIL,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+ASC-H,Squamous Cell Carcinoma,minor_discordant,minor_undercall,undercall,minor
+ASC-H,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+AIS,Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+AIS,Squamous Cell Carcinoma,minor_discordant,minor_variance,variance,minor
+OTHER (EMC45),Adenocarcinoma,minor_discordant,minor_undercall,undercall,minor
+OTHER (EMC45),LSIL (CIN1),minor_discordant,minor_variance,variance,minor
+OTHER (EMC45),HSIL (CIN2),major_discordant,major_undercall,undercall,major
+OTHER (EMC45),HSIL (CIN3),major_discordant,major_undercall,undercall,major
+OTHER (EMC45),Squamous Cell Carcinoma,major_discordant,major_undercall,undercall,major
 NILM,HSIL (CIN2),major_discordant,major_undercall,undercall,major
 NILM,HSIL (CIN3),major_discordant,major_undercall,undercall,major
 NILM,Squamous Cell Carcinoma,major_discordant,major_undercall,undercall,major
 NILM,Adenocarcinoma,major_discordant,major_undercall,undercall,major
-OTHER (EMC45),HSIL (CIN2),major_discordant,major_undercall,undercall,major
-OTHER (EMC45),HSIL (CIN3),major_discordant,major_undercall,undercall,major
-OTHER (EMC45),Squamous Cell Carcinoma,major_discordant,major_undercall,undercall,major
+NILM,AIS,major_discordant,major_undercall,undercall,major
 ASC-US,Squamous Cell Carcinoma,major_discordant,major_undercall,undercall,major
 ASC-US,Adenocarcinoma,major_discordant,major_undercall,undercall,major
+LSIL,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
+HSIL,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
 HSIL,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
+ASC-H,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
 ASC-H,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
+AGC,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
+AGC-ECX,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
+AGC-EMC,Benign / Inflammatory (Negative),minor_discordant,minor_overcall,overcall,minor
+AGC-NEO,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
+AGC-NEO,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
+AGC-ECX/EMC NEO,LSIL (CIN1),minor_discordant,minor_overcall,overcall,minor
+AGC-ECX/EMC NEO,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
 AIS,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
 AIS,LSIL (CIN1),major_discordant,major_overcall,overcall,major
+AIS,HSIL (CIN2),minor_discordant,minor_variance,variance,minor
+AIS,HSIL (CIN3),minor_discordant,minor_variance,variance,minor
 MALIGNANT,Benign / Inflammatory (Negative),major_discordant,major_overcall,overcall,major
 MALIGNANT,LSIL (CIN1),major_discordant,major_overcall,overcall,major
+MALIGNANT,HSIL (CIN2),minor_discordant,minor_overcall,overcall,minor
+MALIGNANT,HSIL (CIN3),minor_discordant,minor_overcall,overcall,minor
+ASC-US,Benign / Inflammatory (Negative),minor_discordant,minor_variance,variance,minor

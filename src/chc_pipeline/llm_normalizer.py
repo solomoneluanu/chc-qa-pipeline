@@ -39,8 +39,7 @@ def call_llm_cyto(raw_text: str, valid_terms: list) -> dict:
     prompt = f"""You are a cytopathology expert.
 Map this raw cytology diagnosis to ONE canonical term.
 
-VALID TERMS — return exactly one of these:
-{json.dumps(valid_terms)}
+VALID TERMS: {json.dumps(valid_terms)}
 
 MAPPING RULES:
 - NILM = negative, no lesion, no dysplasia, within normal limits
@@ -66,8 +65,7 @@ def call_llm_histo(raw_text: str, valid_terms: list) -> dict:
     prompt = f"""You are a histopathology expert.
 Map this raw histology diagnosis to ONE canonical term.
 
-VALID TERMS — return exactly one of these:
-{json.dumps(valid_terms)}
+VALID TERMS: {json.dumps(valid_terms)}
 
 MAPPING RULES:
 - Benign / Inflammatory (Negative) = negative, benign, no CIN, reactive, normal
@@ -90,38 +88,37 @@ def normalize_cyto_sheet(
     model: str = "gemma3:4b"
 ) -> pd.DataFrame:
     """
-    Reads raw cytology diagnosis column.
-    Adds Cytology_Canonical column.
-    All other columns untouched.
+    Normalize cytology sheet with cache.
+    One LLM call per unique text - duplicates are free.
     """
     valid_cyto = load_cyto_terms(dictionary_path)
     df = df.copy()
 
-    canonical_values = []
-    confidence_values = []
-    valid_flags = []
+    texts  = df[raw_diag_col].astype(str).str.strip().tolist()
+    unique = list(dict.fromkeys(texts))
 
-    total = len(df)
+    print(f"  Total    : {len(texts)}")
+    print(f"  Unique   : {len(unique)} (cache saves {len(texts) - len(unique)} LLM calls)")
 
-    for idx, row in df.iterrows():
-        raw_text = str(row[raw_diag_col]).strip()
-        print(f"  Cyto [{idx+1}/{total}]: {raw_text}")
-
-        result = call_llm_cyto(raw_text, valid_cyto)
-
-        canonical = result.get("cytology_canonical")
+    cache = {}
+    for i, text in enumerate(unique):
+        print(f"  [{i+1}/{len(unique)}] {text[:60]}")
+        result   = call_llm_cyto(text, valid_cyto)
+        canonical  = result.get("cytology_canonical")
         confidence = result.get("confidence", "low")
-        is_valid = canonical in valid_cyto
+        is_valid   = canonical in valid_cyto
+        cache[text] = {
+            "canonical":  canonical,
+            "confidence": confidence,
+            "valid":      is_valid
+        }
 
-        canonical_values.append(canonical)
-        confidence_values.append(confidence)
-        valid_flags.append(is_valid)
+    df["Cytology_Canonical"]  = [cache[t]["canonical"]  for t in texts]
+    df["Cyto_LLM_Confidence"] = [cache[t]["confidence"] for t in texts]
+    df["Cyto_Valid"]          = [cache[t]["valid"]       for t in texts]
 
-    df["Cytology_Canonical"]  = canonical_values
-    df["Cyto_LLM_Confidence"] = confidence_values
-    df["Cyto_Valid"]          = valid_flags
-
-    ready = sum(valid_flags)
+    ready = sum(cache[t]["valid"] for t in texts)
+    total = len(texts)
     print(f"\n-- Cyto Normalization: {ready}/{total} valid ({ready/total*100:.1f}%)")
 
     return df
@@ -134,38 +131,37 @@ def normalize_histo_sheet(
     model: str = "gemma3:4b"
 ) -> pd.DataFrame:
     """
-    Reads raw histology diagnosis column.
-    Adds Histology_Canonical column.
-    All other columns untouched.
+    Normalize histology sheet with cache.
+    One LLM call per unique text - duplicates are free.
     """
     valid_histo = load_histo_terms(dictionary_path)
     df = df.copy()
 
-    canonical_values = []
-    confidence_values = []
-    valid_flags = []
+    texts  = df[raw_diag_col].astype(str).str.strip().tolist()
+    unique = list(dict.fromkeys(texts))
 
-    total = len(df)
+    print(f"  Total    : {len(texts)}")
+    print(f"  Unique   : {len(unique)} (cache saves {len(texts) - len(unique)} LLM calls)")
 
-    for idx, row in df.iterrows():
-        raw_text = str(row[raw_diag_col]).strip()
-        print(f"  Histo [{idx+1}/{total}]: {raw_text}")
-
-        result = call_llm_histo(raw_text, valid_histo)
-
-        canonical = result.get("histology_canonical")
+    cache = {}
+    for i, text in enumerate(unique):
+        print(f"  [{i+1}/{len(unique)}] {text[:60]}")
+        result     = call_llm_histo(text, valid_histo)
+        canonical  = result.get("histology_canonical")
         confidence = result.get("confidence", "low")
-        is_valid = canonical in valid_histo
+        is_valid   = canonical in valid_histo
+        cache[text] = {
+            "canonical":  canonical,
+            "confidence": confidence,
+            "valid":      is_valid
+        }
 
-        canonical_values.append(canonical)
-        confidence_values.append(confidence)
-        valid_flags.append(is_valid)
+    df["Histology_Canonical"]  = [cache[t]["canonical"]  for t in texts]
+    df["Histo_LLM_Confidence"] = [cache[t]["confidence"] for t in texts]
+    df["Histo_Valid"]          = [cache[t]["valid"]       for t in texts]
 
-    df["Histology_Canonical"]  = canonical_values
-    df["Histo_LLM_Confidence"] = confidence_values
-    df["Histo_Valid"]          = valid_flags
-
-    ready = sum(valid_flags)
+    ready = sum(cache[t]["valid"] for t in texts)
+    total = len(texts)
     print(f"\n-- Histo Normalization: {ready}/{total} valid ({ready/total*100:.1f}%)")
 
     return df
