@@ -50,7 +50,7 @@ def add_figure_if_exists(story, title, path, styles, width=6.5 * inch, height=3.
         story.append(Spacer(1, 0.2 * inch))
 
 
-def build_pdf_report(results, figure_dir, output_pdf, summary_text=None):
+def build_pdf_report(results, figure_dir, output_pdf, summary_text=None, insights=None):
     os.makedirs(os.path.dirname(output_pdf), exist_ok=True)
 
     doc = SimpleDocTemplate(
@@ -195,3 +195,5 @@ def build_pdf_report(results, figure_dir, output_pdf, summary_text=None):
     story.append(Paragraph(limitations_text.strip().replace("\n", "<br/>"), styles["BodySmall"]))
 
     doc.build(story)
+
+

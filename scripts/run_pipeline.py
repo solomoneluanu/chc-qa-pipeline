@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import os
 import pandas as pd
 import argparse
@@ -86,6 +86,11 @@ def main():
     print("\nSTEP 7: Computing metrics...")
     results = compute_metrics(classified_df)
 
+    print("\nSTEP 7b: Generating LLM clinical commentary...")
+    from src.chc_pipeline.llm_insights import generate_qa_insights
+    insights = generate_qa_insights(results, classified_df)
+    print(f"  Commentary generated: {len(insights)} characters")
+
     print("\nSTEP 8: Exporting Excel...")
     export_results(classified_df, results, output_excel)
 
@@ -101,7 +106,8 @@ def main():
         results=results,
         figure_dir=figure_dir,
         output_pdf=output_pdf,
-        summary_text=summary_text
+        summary_text=summary_text,
+        insights=insights
     )
 
     print("\nPipeline completed successfully.")
@@ -111,3 +117,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
