@@ -1,7 +1,23 @@
 ﻿import json
+import os
 import requests
 import pandas as pd
 import yaml
+
+CACHE_FILE = "data/llm_cache.json"
+
+
+def load_cache():
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, "r") as f:
+            return json.load(f)
+    return {}
+
+
+def save_cache(cache):
+    os.makedirs("data", exist_ok=True)
+    with open(CACHE_FILE, "w") as f:
+        json.dump(cache, f, indent=2)
 
 
 def load_cyto_terms(dictionary_path: str) -> list:
@@ -25,7 +41,7 @@ def call_llm(prompt: str, model: str = "gemma3:4b") -> dict:
                 "prompt": prompt,
                 "stream": False,
                 "format": "json",
-                "options": {"temperature": 0.0, "num_predict": 100}
+                "options": {"temperature": 0.0, "num_predict": 50}
             },
             timeout=120
         )
@@ -87,37 +103,44 @@ def normalize_cyto_sheet(
     dictionary_path: str,
     model: str = "gemma3:4b"
 ) -> pd.DataFrame:
-    """
-    Normalize cytology sheet with cache.
-    One LLM call per unique text - duplicates are free.
-    """
     valid_cyto = load_cyto_terms(dictionary_path)
     df = df.copy()
 
     texts  = df[raw_diag_col].astype(str).str.strip().tolist()
     unique = list(dict.fromkeys(texts))
 
-    print(f"  Total    : {len(texts)}")
-    print(f"  Unique   : {len(unique)} (cache saves {len(texts) - len(unique)} LLM calls)")
+    # Load persistent cache
+    persistent_cache = load_cache()
+    prefix           = "cyto_"
 
-    cache = {}
-    for i, text in enumerate(unique):
-        print(f"  [{i+1}/{len(unique)}] {text[:60]}")
-        result   = call_llm_cyto(text, valid_cyto)
+    already_cached = [t for t in unique if prefix + t in persistent_cache]
+    needs_llm      = [t for t in unique if prefix + t not in persistent_cache]
+
+    print(f"  Total    : {len(texts)}")
+    print(f"  Unique   : {len(unique)}")
+    print(f"  Cached   : {len(already_cached)} texts (instant)")
+    print(f"  LLM calls: {len(needs_llm)} texts (new)")
+
+    for i, text in enumerate(needs_llm):
+        print(f"  [{i+1}/{len(needs_llm)}] {text[:60]}")
+        result     = call_llm_cyto(text, valid_cyto)
         canonical  = result.get("cytology_canonical")
         confidence = result.get("confidence", "low")
         is_valid   = canonical in valid_cyto
-        cache[text] = {
+
+        persistent_cache[prefix + text] = {
             "canonical":  canonical,
             "confidence": confidence,
             "valid":      is_valid
         }
 
-    df["Cytology_Canonical"]  = [cache[t]["canonical"]  for t in texts]
-    df["Cyto_LLM_Confidence"] = [cache[t]["confidence"] for t in texts]
-    df["Cyto_Valid"]          = [cache[t]["valid"]       for t in texts]
+    save_cache(persistent_cache)
 
-    ready = sum(cache[t]["valid"] for t in texts)
+    df["Cytology_Canonical"]  = [persistent_cache[prefix + t]["canonical"]  for t in texts]
+    df["Cyto_LLM_Confidence"] = [persistent_cache[prefix + t]["confidence"] for t in texts]
+    df["Cyto_Valid"]          = [persistent_cache[prefix + t]["valid"]       for t in texts]
+
+    ready = df["Cyto_Valid"].sum()
     total = len(texts)
     print(f"\n-- Cyto Normalization: {ready}/{total} valid ({ready/total*100:.1f}%)")
 
@@ -130,37 +153,44 @@ def normalize_histo_sheet(
     dictionary_path: str,
     model: str = "gemma3:4b"
 ) -> pd.DataFrame:
-    """
-    Normalize histology sheet with cache.
-    One LLM call per unique text - duplicates are free.
-    """
     valid_histo = load_histo_terms(dictionary_path)
     df = df.copy()
 
     texts  = df[raw_diag_col].astype(str).str.strip().tolist()
     unique = list(dict.fromkeys(texts))
 
-    print(f"  Total    : {len(texts)}")
-    print(f"  Unique   : {len(unique)} (cache saves {len(texts) - len(unique)} LLM calls)")
+    # Load persistent cache
+    persistent_cache = load_cache()
+    prefix           = "histo_"
 
-    cache = {}
-    for i, text in enumerate(unique):
-        print(f"  [{i+1}/{len(unique)}] {text[:60]}")
+    already_cached = [t for t in unique if prefix + t in persistent_cache]
+    needs_llm      = [t for t in unique if prefix + t not in persistent_cache]
+
+    print(f"  Total    : {len(texts)}")
+    print(f"  Unique   : {len(unique)}")
+    print(f"  Cached   : {len(already_cached)} texts (instant)")
+    print(f"  LLM calls: {len(needs_llm)} texts (new)")
+
+    for i, text in enumerate(needs_llm):
+        print(f"  [{i+1}/{len(needs_llm)}] {text[:60]}")
         result     = call_llm_histo(text, valid_histo)
         canonical  = result.get("histology_canonical")
         confidence = result.get("confidence", "low")
         is_valid   = canonical in valid_histo
-        cache[text] = {
+
+        persistent_cache[prefix + text] = {
             "canonical":  canonical,
             "confidence": confidence,
             "valid":      is_valid
         }
 
-    df["Histology_Canonical"]  = [cache[t]["canonical"]  for t in texts]
-    df["Histo_LLM_Confidence"] = [cache[t]["confidence"] for t in texts]
-    df["Histo_Valid"]          = [cache[t]["valid"]       for t in texts]
+    save_cache(persistent_cache)
 
-    ready = sum(cache[t]["valid"] for t in texts)
+    df["Histology_Canonical"]  = [persistent_cache[prefix + t]["canonical"]  for t in texts]
+    df["Histo_LLM_Confidence"] = [persistent_cache[prefix + t]["confidence"] for t in texts]
+    df["Histo_Valid"]          = [persistent_cache[prefix + t]["valid"]       for t in texts]
+
+    ready = df["Histo_Valid"].sum()
     total = len(texts)
     print(f"\n-- Histo Normalization: {ready}/{total} valid ({ready/total*100:.1f}%)")
 

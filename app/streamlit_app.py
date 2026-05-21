@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
 import os
 import sys
@@ -19,7 +19,7 @@ from src.chc_pipeline.pdf_report import build_pdf_report
 
 st.set_page_config(
     page_title="CHC-QA Pipeline",
-    page_icon="🔬",
+    page_icon="??",
     layout="wide"
 )
 
@@ -31,7 +31,7 @@ FIGURE_DIR      = os.path.join(OUTPUT_DIR, "figures")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(FIGURE_DIR, exist_ok=True)
 
-st.title("🔬 CHC-QA Pipeline")
+st.title("?? CHC-QA Pipeline")
 st.markdown("**Cytology-Histology Correlation Quality Assurance**")
 st.markdown("---")
 
@@ -264,29 +264,26 @@ if run_ready:
 
 if "results" in st.session_state:
 
-    results       = st.session_state["results"]
+    results = st.session_state["results"]
     classified_df = st.session_state["classified_df"]
 
     st.markdown("---")
     st.header("QA Results")
 
-    total      = results.get("total_cases", 1)
-    concordant = results.get("concordant_count", 0)
-    major      = results.get("major_discordant_count", 0)
-    minor      = results.get("minor_discordant_count", 0)
-
-    col1, col2, col3, col4 = st.columns(4)
-
-    with col1:
+    total = results.get("total_cases", 1)
+    concordant = results.get("concordance_counts", {}).get("concordant", 0)
+    major = results.get("concordance_counts", {}).get("major_discordant", 0)
+    minor = results.get("concordance_counts", {}).get("minor_discordant", 0)
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
         st.metric("Total Cases", total)
-    with col2:
+    with m2:
         st.metric("Concordant", f"{concordant} ({concordant/total*100:.1f}%)")
-    with col3:
-        st.metric("Major Discordant", f"{major} ({major/total*100:.1f}%)",
-                  delta=f"{major/total*100:.1f}%", delta_color="inverse")
-    with col4:
+    with m3:
+        st.metric("Major Discordant", f"{major} ({major/total*100:.1f}%)", delta=f"{major/total*100:.1f}%", delta_color="inverse")
+    with m4:
         st.metric("Minor Discordant", f"{minor} ({minor/total*100:.1f}%)")
-
+    
     st.subheader("Case Detail")
     display_cols = [c for c in [
         "case_id", "MRN", "cyto_raw_diag", "histo_raw_diag",

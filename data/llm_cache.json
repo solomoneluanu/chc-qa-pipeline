@@ -1,0 +1,257 @@
+{
+  "cyto_ATYPICAL GLANDULAR CELLS (AGC), NOT OTHERWISE SPECIFIED": {
+    "canonical": "AGC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AIS. Adenocarcinoma in situ identified.": {
+    "canonical": "AIS",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_HIGH GRADE SQUAMOUS INTRAEPITHELIAL LESION (HSIL)": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ATYPICAL SQUAMOUS CELLS OF UNDETERMINED SIGNIFICANCE (ASC-US)": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Atypical glandular cells, favor neoplasia. Further evaluation recommended.": {
+    "canonical": "AGC-NEO",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_HSIL - SEE COMMENT. Correlate with clinical findings.": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_HSIL. Features consistent with CIN 2-3. Colposcopy recommended.": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ATYPICAL SQUAMOUS CELLS, CANNOT EXCLUDE HSIL (ASC-H)": {
+    "canonical": "ASC-H",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Low-grade squamous intraepithelial lesion. Koilocytic atypia present.": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASC-H. High grade lesion cannot be excluded. Colposcopy recommended.": {
+    "canonical": "ASC-H",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_LOW GRADE SQUAMOUS INTRAEPITHELIAL LESION (LSIL)": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_lsil": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AGC-NEO. Endocervical adenocarcinoma in situ cannot be excluded.": {
+    "canonical": "AGC-NEO",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASC-US. Cannot exclude low grade squamous intraepithelial lesion.": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Endometrial cells present in woman age 45 or older.": {
+    "canonical": "OTHER (EMC45)",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_NILM. Endocervical/transformation zone component present.": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_High grade squamous intraepithelial lesion. Cannot exclude invasion.": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Neg for malignancy": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASCUS": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_HGSIL": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_NILLM": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_MALIGNANT CELLS PRESENT. Features consistent with squamous cell carcinoma.": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Satisfactory for evaluation. Negative for intraepithelial lesion or malignancy (NILM).": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Negative. No significant atypia identified.": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_No malignant cells identified. Reactive cellular changes.": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Within normal limits. Mild inflammatory changes noted.": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Positive for malignancy. Adenocarcinoma cannot be excluded.": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_LSIL. Consistent with HPV effect/CIN 1.": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Atypical squamous cells, undetermined significance. Reflex HPV testing recommended.": {
+    "canonical": "AGC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_NEGATIVE FOR INTRAEPITHELIAL LESION OR MALIGNANCY": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Low grade CIN (CIN 1). Changes limited to lower third of epithelium.": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Invasive squamous cell carcinoma, moderately differentiated.": {
+    "canonical": "Squamous Cell Carcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Benign cervical squamous and endocervical mucosa. No dysplasia identified.": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Cervical biopsy: reactive squamous epithelium. No CIN.": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Moderate dysplasia (CIN 2). Ectocervical margin uninvolved.": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_High grade CIN (CIN 2-3). Cannot exclude early invasion.": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Cervical intraepithelial neoplasia, grade 3 (CIN 3/HSIL).": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Invasive adenocarcinoma, endocervical type.": {
+    "canonical": "Adenocarcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 2-3. Cannot exclude higher grade lesion.": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "medium",
+    "valid": true
+  },
+  "histo_Benign findings. Transformation zone adequately sampled.": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 2. Atypia involving lower two thirds of epithelial thickness.": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Chronic cervicitis. Squamous metaplasia. No significant atypia.": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Squamous cell carcinoma. Stromal invasion present.": {
+    "canonical": "Squamous Cell Carcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Negative. No intraepithelial lesion identified.": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Cervical intraepithelial neoplasia, grade 2 (CIN 2/HSIL).": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Mild dysplasia consistent with CIN 1.": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Cervical intraepithelial neoplasia, grade 1 (CIN 1/LSIL).": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Adenocarcinoma. Glandular invasion present.": {
+    "canonical": "Adenocarcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Severe dysplasia/carcinoma in situ (CIN 3). Margins involved.": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 3. Full thickness epithelial atypia. Numerous mitotic figures.": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 1. Koilocytic atypia consistent with HPV effect.": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  }
+}
