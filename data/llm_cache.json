@@ -253,5 +253,340 @@
     "canonical": "LSIL (CIN1)",
     "confidence": "high",
     "valid": true
+  },
+  "cyto_HSIL": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Adenocarcinoma in situ": {
+    "canonical": "AIS",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Carcinoma": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_High grade squamous intraepithelial lesion": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Within normal limits": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Asc-us": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_No dysplasia identified": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_OTHER (EMC45)": {
+    "canonical": "OTHER (EMC45)",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Malignant cells present": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AGC-NOS": {
+    "canonical": "AGC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Low-grade SIL": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AGC-NEO": {
+    "canonical": "AGC-NEO",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Low grade lesion": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Atypical glandular cells": {
+    "canonical": "AGC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Low grade squamous intraepithelial lesion": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Atypical glandular cells favor neoplasia": {
+    "canonical": "AGC-NEO",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_High-grade SIL": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Neg": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AGC": {
+    "canonical": "AGC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Endometrial cells": {
+    "canonical": "AGC-EMC",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASC-H": {
+    "canonical": "ASC-H",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_High grade lesion": {
+    "canonical": "HSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_atypical squamous cells": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_MALIGNANT": {
+    "canonical": "MALIGNANT",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_NILM": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_AIS": {
+    "canonical": "AIS",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASC H": {
+    "canonical": "ASC-H",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Negative for intraepithelial lesion": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_ASC-US": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Negative cytology": {
+    "canonical": "NILM",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Cannot exclude HSIL": {
+    "canonical": "ASC-H",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_Atypical squamous cells of undetermined significance": {
+    "canonical": "ASC-US",
+    "confidence": "high",
+    "valid": true
+  },
+  "cyto_LSIL": {
+    "canonical": "LSIL",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Squamous Cell Carcinoma": {
+    "canonical": "Squamous Cell Carcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Carcinoma in situ": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Full thickness atypia": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 3": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Benign / Inflammatory (Negative)": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN3": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Chronic cervicitis": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_HSIL (CIN2)": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Benign tissue": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Reactive changes": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 2": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Invasive SCC": {
+    "canonical": "Squamous Cell Carcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Benign": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN2-3": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Severe dysplasia": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_HSIL (CIN3)": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN 1": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_cin1": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_LSIL (CIN1)": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Invasive adenocarcinoma": {
+    "canonical": "Adenocarcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIS": {
+    "canonical": "HSIL (CIN3)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Normal cervix": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_No CIN": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_cin2": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Moderate dysplasia": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Adenocarcinoma": {
+    "canonical": "Adenocarcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN1": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_CIN2": {
+    "canonical": "HSIL (CIN2)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_No dysplasia": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Mild dysplasia": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_SCC": {
+    "canonical": "Squamous Cell Carcinoma",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Koilocytic change": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Low grade CIN": {
+    "canonical": "LSIL (CIN1)",
+    "confidence": "high",
+    "valid": true
+  },
+  "histo_Negative": {
+    "canonical": "Benign / Inflammatory (Negative)",
+    "confidence": "high",
+    "valid": true
   }
 }
