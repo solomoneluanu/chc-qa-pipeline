@@ -212,12 +212,31 @@ if "Real lab" in mode:
     can_run   = has_excel or has_two
 
     if can_run:
+        # Clear previous results when new files uploaded
+        for key in ["results", "classified_df", "output_excel", "output_pdf", "unmatched_df"]:
+            if key in st.session_state:
+                del st.session_state[key]
         st.markdown('<div class="success-card">Files uploaded successfully. Auto-detecting columns...</div>', unsafe_allow_html=True)
 
         tmp_path = tmp_c = tmp_h = None
         try:
             if has_excel:
                 tmp_path = save_upload(excel_file, ".xlsx")
+                
+                # Validate file has correct sheets
+                import pandas as pd
+                xl = pd.ExcelFile(tmp_path)
+                if len(xl.sheet_names) < 2:
+                    st.markdown("""
+                    <div class="error-card">
+                    This file only has one sheet. Real lab mode requires an Excel file 
+                    with separate Cytology and Histology sheets.<br>
+                    If you have a pre-paired single sheet file use Evaluation mode instead.
+                    </div>
+                    """, unsafe_allow_html=True)
+                    cleanup(tmp_path)
+                    st.stop()
+                
                 cyto_df, histo_df = load_combined_excel(tmp_path)
             else:
                 tmp_c = save_upload(cyto_file,  ".csv" if cyto_file.name.endswith(".csv") else ".xlsx")
