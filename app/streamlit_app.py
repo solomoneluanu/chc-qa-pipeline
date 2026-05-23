@@ -384,9 +384,208 @@ if "results" in st.session_state:
     major_rate = round(major / total * 100, 1) if total > 0 else 0
     conc_rate  = round(concordant / total * 100, 1) if total > 0 else 0
     minor_rate = round(minor / total * 100, 1) if total > 0 else 0
+    hsil_pv    = results.get("hsil_pv_plus", 0) or 0
+    major_fn   = results.get("major_fn_count", 0)
+    within_one = results.get("agreement_within_one_pct", 0)
+    ext_pv     = results.get("extended_pv_plus", 0) or 0
+    pv_flag    = results.get("hsil_pv_interpretation", "")
+    key        = results.get("key_signals", {})
 
     st.markdown("---")
     st.markdown('<div class="step-header">QA Results</div>', unsafe_allow_html=True)
+
+    # CAP alert banner
+    if major_rate > 10:
+        st.markdown(f"""
+        <div class="error-card">
+        CAP Alert: Major discordance rate of {major_rate}% exceeds the CAP
+        benchmark of less than 10%. Corrective action required per CYP.06600.
+        </div>""", unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="success-card">
+        CAP Status: Major discordance rate of {major_rate}% is within the
+        CAP benchmark of less than 10%.
+        </div>""", unsafe_allow_html=True)
+
+    if hsil_pv > 0 and hsil_pv < 60:
+        st.markdown(f"""
+        <div class="error-card">
+        PV+ Alert: HSIL positive predictive value of {hsil_pv:.1f}%
+        is below the CAP target of 60%.
+        </div>""", unsafe_allow_html=True)
+    elif hsil_pv > 95:
+        st.markdown(f"""
+        <div class="warning-card">
+        PV+ Flag: HSIL PV+ of {hsil_pv:.1f}% is unusually high.
+        Per Birdsong, this may indicate an excessive cytology undercall rate.
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # Row 1 — Core metrics
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value color-blue">{total}</div>
+            <div class="metric-label">Total Cases</div>
+        </div>""", unsafe_allow_html=True)
+    with m2:
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value color-green">{concordant}</div>
+            <div class="metric-sub color-green">{conc_rate}%</div>
+            <div class="metric-label">Concordant</div>
+        </div>""", unsafe_allow_html=True)
+    with m3:
+        color = "color-red" if major_rate > 10 else "color-orange"
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value {color}">{major}</div>
+            <div class="metric-sub {color}">{major_rate}%</div>
+            <div class="metric-label">Major Discordant</div>
+        </div>""", unsafe_allow_html=True)
+    with m4:
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value color-orange">{minor}</div>
+            <div class="metric-sub color-orange">{minor_rate}%</div>
+            <div class="metric-label">Minor Discordant</div>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # Row 2 — Birdsong metrics
+    b1, b2, b3, b4 = st.columns(4)
+    with b1:
+        pv_color = "color-red" if hsil_pv < 60 else "color-green"
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value {pv_color}">{hsil_pv:.1f}%</div>
+            <div class="metric-sub" style="color:#64748B;">Target: 60%</div>
+            <div class="metric-label">HSIL PV+</div>
+        </div>""", unsafe_allow_html=True)
+    with b2:
+        ext_color = "color-red" if ext_pv < 60 else "color-green"
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value {ext_color}">{ext_pv:.1f}%</div>
+            <div class="metric-sub" style="color:#64748B;">HSIL+ASC-H+AGC-NEO</div>
+            <div class="metric-label">Extended PV+</div>
+        </div>""", unsafe_allow_html=True)
+    with b3:
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value color-blue">{within_one:.1f}%</div>
+            <div class="metric-sub" style="color:#64748B;">Concordant + Minor</div>
+            <div class="metric-label">Within One Grade</div>
+        </div>""", unsafe_allow_html=True)
+    with b4:
+        fn_color = "color-red" if major_fn > 0 else "color-green"
+        st.markdown(f"""
+        <div class="metric-box">
+            <div class="metric-value {fn_color}">{int(major_fn)}</div>
+            <div class="metric-sub" style="color:#64748B;">Must review all</div>
+            <div class="metric-label">Major False Negatives</div>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # PV+ interpretation
+    if pv_flag:
+        st.info(f"PV+ Interpretation: {pv_flag}")
+
+    # Intergrade follow-up table
+    intergrade = results.get("intergrade_table")
+    if intergrade is not None and len(intergrade) > 0:
+        st.markdown("---")
+        st.markdown('<div class="step-header">Intergrade Follow-Up Rates (Birdsong Section 8)</div>',
+                    unsafe_allow_html=True)
+        st.caption("HSIL+ histology rates following each cytology category. Elevated rates may indicate systematic undercalling.")
+        st.dataframe(intergrade, use_container_width=True, hide_index=True)
+
+    # Case detail
+    st.markdown("---")
+    st.markdown('<div class="step-header">Case Detail</div>', unsafe_allow_html=True)
+
+    display_cols = [c for c in [
+        "case_id", "MRN", "cyto_raw_diag", "histo_raw_diag",
+        "Cytology_Canonical", "Histology_Canonical",
+        "Concordance_Class", "Discordance_Subtype", "Severity"
+    ] if c in classified_df.columns]
+
+    st.dataframe(
+        classified_df[display_cols],
+        use_container_width=True,
+        height=400,
+        hide_index=True
+    )
+
+    if "unmatched_df" in st.session_state and len(st.session_state["unmatched_df"]) > 0:
+        n = len(st.session_state["unmatched_df"])
+        with st.expander(f"Unmatched Cases ({n}) - No histology pair found within {window_days} days"):
+            st.dataframe(st.session_state["unmatched_df"], use_container_width=True, hide_index=True)
+
+    # Downloads
+    st.markdown("---")
+    st.markdown('<div class="step-header">Download Reports</div>', unsafe_allow_html=True)
+    st.markdown("Reports are ready for laboratory meeting presentation and CAP inspection filing.")
+    st.markdown("")
+
+    d1, d2 = st.columns(2)
+    with d1:
+        excel_path = st.session_state.get("output_excel", "")
+        if os.path.exists(excel_path):
+            with open(excel_path, "rb") as f:
+                st.download_button(
+                    label="Download Excel QA Report",
+                    data=f.read(),
+                    file_name="chc_qa_report.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    use_container_width=True,
+                    type="primary"
+                )
+            st.caption("Color-coded case detail with all Birdsong metrics")
+
+    with d2:
+        pdf_path = st.session_state.get("output_pdf", "")
+        if os.path.exists(pdf_path):
+            with open(pdf_path, "rb") as f:
+                st.download_button(
+                    label="Download PDF QA Report",
+                    data=f.read(),
+                    file_name="chc_qa_report.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+            st.caption("Full report with Birdsong metrics, intergrade analysis and CAP signals")
+
+    # Visualizations
+    st.markdown("---")
+    st.markdown('<div class="step-header">Visualizations</div>', unsafe_allow_html=True)
+
+    fig_files = [
+        ("concordance_bar.png",      "Concordance Distribution"),
+        ("discrepancy_buckets.png",  "Discrepancy Buckets"),
+        ("hsil_metrics.png",         "HSIL Correlation Metrics"),
+        ("confusion_matrix.png",     "Confusion Matrix"),
+        ("summary_dashboard.png",    "Summary Dashboard"),
+    ]
+
+    v1, v2 = st.columns(2)
+    for i, (fname, title) in enumerate(fig_files):
+        fpath = os.path.join(FIGURE_DIR, fname)
+        if os.path.exists(fpath):
+            with (v1 if i % 2 == 0 else v2):
+                st.markdown(f"**{title}**")
+                st.image(fpath, use_container_width=True)
+
+    st.markdown("""
+    <div class="footer-text">
+    CHC-QA Pipeline | Per ASC Birdsong Guideline 2017 | CAP CYP.06600 |
+    github.com/solomoneluanu/chc-qa-pipeline
+    </div>""", unsafe_allow_html=True)
 
     # CAP status banner
     if major_rate > 10:
@@ -479,7 +678,8 @@ if "results" in st.session_state:
                     file_name="chc_qa_report.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     use_container_width=True,
-                    type="primary"
+                    type="primary",
+                    key="dl_excel_results"
                 )
             st.caption("Color-coded case detail with summary metrics and concordance tables")
 
@@ -492,7 +692,8 @@ if "results" in st.session_state:
                     data=f.read(),
                     file_name="chc_qa_report.pdf",
                     mime="application/pdf",
-                    use_container_width=True
+                    use_container_width=True,
+                    key="dl_pdf_results"
                 )
             st.caption("Professional report ready for CAP inspection documentation")
 

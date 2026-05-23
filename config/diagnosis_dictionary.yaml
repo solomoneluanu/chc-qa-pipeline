@@ -1,60 +1,178 @@
 cytology_raw_to_canonical:
+  # NILM variants
   NILM: NILM
   "Negative for intraepithelial lesion or malignancy": NILM
   "No intraepithelial lesion": NILM
   "Negative cytology": NILM
+  "Negative": NILM
+  "Normal": NILM
+  "No dysplasia": NILM
+  "No dysplasia identified": NILM
+  "Within normal limits": NILM
+  "No malignant cells identified": NILM
+  "Reactive cellular changes": NILM
+  "No significant atypia": NILM
+  "Neg": NILM
+  "Neg for malignancy": NILM
 
+  # OTHER EMC45
   "OTHER (EMC45)": "OTHER (EMC45)"
   "Endometrial cells": "OTHER (EMC45)"
   "Benign endometrial cells": "OTHER (EMC45)"
+  "Endometrial cells present in woman age 45 or older": "OTHER (EMC45)"
 
+  # ASC-US variants
   "ASC-US": "ASC-US"
+  "ASC US": "ASC-US"
+  "ASCUS": "ASC-US"
+  "Asc-us": "ASC-US"
   "Atypical squamous cells of undetermined significance": "ASC-US"
+  "Atypical squamous cells, undetermined significance": "ASC-US"
   "Atypical squamous cells": "ASC-US"
+  "ATYPICAL SQUAMOUS CELLS OF UNDETERMINED SIGNIFICANCE (ASC-US)": "ASC-US"
+  "Atypical squamous cells, undetermined significance. Reflex HPV testing recommended.": "ASC-US"
 
+  # ASC-H variants
+  "ASC-H": "ASC-H"
+  "ASC H": "ASC-H"
+  "ASCH": "ASC-H"
+  "Cannot exclude HSIL": "ASC-H"
+  "Atypical squamous cells, cannot exclude HSIL": "ASC-H"
+  "ATYPICAL SQUAMOUS CELLS, CANNOT EXCLUDE HSIL (ASC-H)": "ASC-H"
+
+  # LSIL variants
   LSIL: LSIL
   "Low-grade squamous intraepithelial lesion": LSIL
+  "Low grade squamous intraepithelial lesion": LSIL
   "Low grade lesion": LSIL
+  "Low grade SIL": LSIL
+  "Low-grade SIL": LSIL
+  "LGSIL": LSIL
+  "LOW GRADE SQUAMOUS INTRAEPITHELIAL LESION (LSIL)": LSIL
+  "lsil": LSIL
 
-  AGC: AGC
-  "Atypical glandular cells": AGC
-
-  AGC-ECX: AGC-ECX
-  AGC-EMC: AGC-EMC
-
+  # HSIL variants
   HSIL: HSIL
   "High-grade squamous intraepithelial lesion": HSIL
+  "High grade squamous intraepithelial lesion": HSIL
   "High grade lesion": HSIL
+  "High grade SIL": HSIL
+  "High-grade SIL": HSIL
+  "HGSIL": HSIL
+  "HIGH GRADE SQUAMOUS INTRAEPITHELIAL LESION (HSIL)": HSIL
+  "HSIL - SEE COMMENT": HSIL
+  "High grade squamous intraepithelial lesion. Cannot exclude invasion.": HSIL
 
-  "ASC-H": "ASC-H"
-  "Cannot exclude HSIL": "ASC-H"
 
+  # AGC variants
+  AGC: AGC
+  "Atypical glandular cells": AGC
+  "Atypical glandular cells, not otherwise specified": AGC
+  "ATYPICAL GLANDULAR CELLS (AGC), NOT OTHERWISE SPECIFIED": AGC
+  "AGC-NOS": AGC
+  "AGC. Endocervical cell atypia noted.": AGC
+
+
+  # AGC-ECX
+  AGC-ECX: AGC-ECX
+  "Atypical endocervical cells": AGC-ECX
+
+  # AGC-EMC
+  AGC-EMC: AGC-EMC
+  "Atypical endometrial cells": AGC-EMC
+
+  # AGC-NEO
   AGC-NEO: AGC-NEO
   "AGC-ECX/EMC NEO": "AGC-ECX/EMC NEO"
+  "Atypical glandular cells, favor neoplasia": AGC-NEO
+  "Atypical glandular cells favor neoplasia": AGC-NEO
+  "AGC favor neoplasia": AGC-NEO
+  "ATYPICAL GLANDULAR CELLS, FAVOR NEOPLASIA": AGC-NEO
 
+  # AIS
   AIS: AIS
+  "Adenocarcinoma in situ": AIS
+  "AIS. Adenocarcinoma in situ identified.": AIS
+  "Endocervical adenocarcinoma in situ": AIS
+
+  # MALIGNANT
   MALIGNANT: MALIGNANT
+  "Malignant": MALIGNANT
+  "Malignant cells present": MALIGNANT
+  "Carcinoma": MALIGNANT
+  "Squamous cell carcinoma": MALIGNANT
+  "Positive for malignancy": MALIGNANT
+  "MALIGNANT CELLS PRESENT. Features consistent with squamous cell carcinoma.": MALIGNANT
+  "Positive for malignancy. Adenocarcinoma cannot be excluded.": MALIGNANT
 
 histology_raw_to_canonical:
+  # Benign variants
   "Benign / Inflammatory (Negative)": "Benign / Inflammatory (Negative)"
   Negative: "Benign / Inflammatory (Negative)"
   Benign: "Benign / Inflammatory (Negative)"
   "Benign tissue": "Benign / Inflammatory (Negative)"
   "Benign findings": "Benign / Inflammatory (Negative)"
+  "No CIN": "Benign / Inflammatory (Negative)"
+  "Normal cervix": "Benign / Inflammatory (Negative)"
+  "Normal": "Benign / Inflammatory (Negative)"
+  "Chronic cervicitis": "Benign / Inflammatory (Negative)"
+  "Reactive changes": "Benign / Inflammatory (Negative)"
+  "No dysplasia": "Benign / Inflammatory (Negative)"
+  "No dysplasia identified": "Benign / Inflammatory (Negative)"
+  "No intraepithelial lesion identified": "Benign / Inflammatory (Negative)"
+  "Benign cervical squamous and endocervical mucosa. No dysplasia identified.": "Benign / Inflammatory (Negative)"
+  "Cervical biopsy: reactive squamous epithelium. No CIN.": "Benign / Inflammatory (Negative)"
+  "Transformation zone adequately sampled": "Benign / Inflammatory (Negative)"
 
+  # CIN1 variants
   "LSIL (CIN1)": "LSIL (CIN1)"
   CIN1: "LSIL (CIN1)"
+  "CIN 1": "LSIL (CIN1)"
   "Low grade lesion": "LSIL (CIN1)"
+  "Mild dysplasia": "LSIL (CIN1)"
+  "Koilocytic change": "LSIL (CIN1)"
+  "Koilocytic atypia": "LSIL (CIN1)"
+  "Low grade CIN": "LSIL (CIN1)"
+  "Low-grade CIN": "LSIL (CIN1)"
+  "Cervical intraepithelial neoplasia, grade 1 (CIN 1/LSIL).": "LSIL (CIN1)"
+  "CIN 1. Koilocytic atypia consistent with HPV effect.": "LSIL (CIN1)"
+  "Low grade CIN (CIN 1). Changes limited to lower third of epithelium.": "LSIL (CIN1)"
 
+  # CIN2 variants
   "HSIL (CIN2)": "HSIL (CIN2)"
   CIN2: "HSIL (CIN2)"
+  "CIN 2": "HSIL (CIN2)"
   "Moderate dysplasia": "HSIL (CIN2)"
+  "Cervical intraepithelial neoplasia, grade 2 (CIN 2/HSIL).": "HSIL (CIN2)"
+  "CIN 2. Atypia involving lower two thirds of epithelial thickness.": "HSIL (CIN2)"
+  "Moderate dysplasia (CIN 2). Ectocervical margin uninvolved.": "HSIL (CIN2)"
 
+  # CIN3 variants
   "HSIL (CIN3)": "HSIL (CIN3)"
   CIN3: "HSIL (CIN3)"
+  "CIN 3": "HSIL (CIN3)"
   "Severe dysplasia": "HSIL (CIN3)"
+  "Carcinoma in situ": "HSIL (CIN3)"
+  "CIS": "HSIL (CIN3)"
+  "Full thickness atypia": "HSIL (CIN3)"
+  "High grade CIN": "HSIL (CIN3)"
+  "Cervical intraepithelial neoplasia, grade 3 (CIN 3/HSIL).": "HSIL (CIN3)"
+  "CIN 3. Full thickness epithelial atypia. Numerous mitotic figures.": "HSIL (CIN3)"
+  "Severe dysplasia/carcinoma in situ (CIN 3). Margins involved.": "HSIL (CIN3)"
+  "High grade CIN (CIN 2-3). Cannot exclude early invasion.": "HSIL (CIN3)"
 
+  # Squamous Cell Carcinoma
   "Squamous Cell Carcinoma": "Squamous Cell Carcinoma"
   SCC: "Squamous Cell Carcinoma"
+  "Invasive SCC": "Squamous Cell Carcinoma"
+  "Invasive squamous cell carcinoma": "Squamous Cell Carcinoma"
+  "Squamous cell carcinoma": "Squamous Cell Carcinoma"
+  "Invasive squamous cell carcinoma, moderately differentiated.": "Squamous Cell Carcinoma"
+  "Squamous cell carcinoma. Stromal invasion present.": "Squamous Cell Carcinoma"
 
+  # Adenocarcinoma
   Adenocarcinoma: Adenocarcinoma
+  "Invasive adenocarcinoma": Adenocarcinoma
+  "Invasive adenocarcinoma, endocervical type.": Adenocarcinoma
+  "Adenocarcinoma. Glandular invasion present.": Adenocarcinoma
+  

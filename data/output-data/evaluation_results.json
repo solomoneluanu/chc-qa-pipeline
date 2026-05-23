@@ -1,0 +1,194 @@
+{
+  "cyto": {
+    "sheet_type": "cytology",
+    "accuracy": {
+      "total": 105,
+      "correct": 102,
+      "accuracy": 97.14285714285714,
+      "per_category": {
+        "AGC": {
+          "total": 8,
+          "correct": 7,
+          "accuracy": 87.5
+        },
+        "HSIL": {
+          "total": 17,
+          "correct": 16,
+          "accuracy": 94.11764705882352
+        },
+        "OTHER (EMC45)": {
+          "total": 3,
+          "correct": 3,
+          "accuracy": 100.0
+        },
+        "ASC-US": {
+          "total": 11,
+          "correct": 10,
+          "accuracy": 90.9090909090909
+        },
+        "AIS": {
+          "total": 4,
+          "correct": 4,
+          "accuracy": 100.0
+        },
+        "MALIGNANT": {
+          "total": 6,
+          "correct": 6,
+          "accuracy": 100.0
+        },
+        "LSIL": {
+          "total": 16,
+          "correct": 16,
+          "accuracy": 100.0
+        },
+        "AGC-NEO": {
+          "total": 6,
+          "correct": 6,
+          "accuracy": 100.0
+        },
+        "ASC-H": {
+          "total": 9,
+          "correct": 9,
+          "accuracy": 100.0
+        },
+        "NILM": {
+          "total": 25,
+          "correct": 25,
+          "accuracy": 100.0
+        }
+      }
+    },
+    "hallucination": {
+      "type_a_count": 3,
+      "type_b_count": 0,
+      "type_a_rate": 2.857142857142857,
+      "type_b_rate": 0.0,
+      "total_halluc": 2.857142857142857,
+      "type_a_examples": [
+        {
+          "text": "High grade squamous intraepithelial lesion. Cannot exclude i",
+          "expected": "HSIL",
+          "got": null
+        },
+        {
+          "text": "Atypical squamous cells, undetermined significance. Reflex H",
+          "expected": "ASC-US",
+          "got": null
+        },
+        {
+          "text": "AGC. Endocervical cell atypia noted.",
+          "expected": "AGC",
+          "got": null
+        }
+      ],
+      "type_b_examples": []
+    },
+    "calibration": {
+      "ece": 10.57,
+      "bins": {
+        "high": {
+          "count": 102,
+          "avg_confidence": 90.0,
+          "actual_accuracy": 100.0,
+          "gap": 10.0
+        },
+        "low": {
+          "count": 3,
+          "avg_confidence": 30.0,
+          "actual_accuracy": 0.0,
+          "gap": 30.0
+        }
+      },
+      "high_conf_accuracy": 100.0,
+      "high_conf_count": 102,
+      "interpretation": "Moderate calibration"
+    }
+  },
+  "histo": {
+    "sheet_type": "histology",
+    "accuracy": {
+      "total": 99,
+      "correct": 97,
+      "accuracy": 97.97979797979798,
+      "per_category": {
+        "HSIL (CIN2)": {
+          "total": 16,
+          "correct": 15,
+          "accuracy": 93.75
+        },
+        "Adenocarcinoma": {
+          "total": 12,
+          "correct": 12,
+          "accuracy": 100.0
+        },
+        "HSIL (CIN3)": {
+          "total": 16,
+          "correct": 15,
+          "accuracy": 93.75
+        },
+        "LSIL (CIN1)": {
+          "total": 16,
+          "correct": 16,
+          "accuracy": 100.0
+        },
+        "Benign / Inflammatory (Negative)": {
+          "total": 26,
+          "correct": 26,
+          "accuracy": 100.0
+        },
+        "Squamous Cell Carcinoma": {
+          "total": 13,
+          "correct": 13,
+          "accuracy": 100.0
+        }
+      }
+    },
+    "hallucination": {
+      "type_a_count": 0,
+      "type_b_count": 2,
+      "type_a_rate": 0.0,
+      "type_b_rate": 2.0202020202020203,
+      "total_halluc": 2.0202020202020203,
+      "type_a_examples": [],
+      "type_b_examples": [
+        {
+          "text": "CIN 2-3. Cannot exclude higher grade lesion.",
+          "expected": "HSIL (CIN2)",
+          "got": "HSIL (CIN3)"
+        },
+        {
+          "text": "High grade CIN (CIN 2-3). Cannot exclude early invasion.",
+          "expected": "HSIL (CIN3)",
+          "got": "HSIL (CIN2)"
+        }
+      ]
+    },
+    "calibration": {
+      "ece": 9.49,
+      "bins": {
+        "high": {
+          "count": 98,
+          "avg_confidence": 90.0,
+          "actual_accuracy": 99.0,
+          "gap": 9.0
+        },
+        "medium": {
+          "count": 1,
+          "avg_confidence": 60.0,
+          "actual_accuracy": 0.0,
+          "gap": 60.0
+        }
+      },
+      "high_conf_accuracy": 99.0,
+      "high_conf_count": 98,
+      "interpretation": "Good calibration"
+    }
+  },
+  "classification": {
+    "total": 54,
+    "correct": 54,
+    "accuracy": 100.0,
+    "major_fn_rate": 0.0,
+    "errors": []
+  }
+}
