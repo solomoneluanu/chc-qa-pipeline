@@ -16,13 +16,13 @@ from src.chc_pipeline.export import export_results
 from src.chc_pipeline.visualize import generate_all_figures
 from src.chc_pipeline.pdf_report import build_pdf_report
 
-st.set_page_config(page_title="CHC-QA Pipeline", layout="wide", page_icon="&#128300;")
+st.set_page_config(page_title="CHC-QA Pipeline", layout="wide")
+
 st.markdown("""
 <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .block-container {padding-top: 2rem;}
-
     .app-header {
         background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
         padding: 2rem 2.5rem;
@@ -30,18 +30,8 @@ st.markdown("""
         margin-bottom: 2rem;
         color: white;
     }
-    .app-header h1 {
-        color: white;
-        font-size: 2rem;
-        font-weight: 700;
-        margin: 0;
-        padding: 0;
-    }
-    .app-header p {
-        color: #BBDEFB;
-        margin: 0.3rem 0 0 0;
-        font-size: 1rem;
-    }
+    .app-header h1 {color: white; font-size: 2rem; font-weight: 700; margin: 0; padding: 0;}
+    .app-header p {color: #BBDEFB; margin: 0.3rem 0 0 0; font-size: 1rem;}
     .step-header {
         background: #E3F2FD;
         border-left: 5px solid #1565C0;
@@ -52,81 +42,20 @@ st.markdown("""
         color: #1565C0;
         margin-bottom: 1rem;
     }
-    .info-card {
-        background: #F8F9FA;
-        border: 1px solid #E0E0E0;
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .success-card {
-        background: #E8F5E9;
-        border: 1px solid #66BB6A;
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        color: #2E7D32;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    .warning-card {
-        background: #FFF8E1;
-        border: 1px solid #FFA726;
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        color: #E65100;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    .error-card {
-        background: #FFEBEE;
-        border: 1px solid #EF5350;
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        color: #C62828;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    .metric-box {
-        background: white;
-        border: 1px solid #E0E0E0;
-        border-radius: 10px;
-        padding: 1.2rem;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .metric-value {
-        font-size: 2.2rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-    .metric-label {
-        font-size: 0.85rem;
-        color: #666;
-        margin-top: 0.3rem;
-    }
-    .metric-sub {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-top: 0.2rem;
-    }
-    .color-green { color: #2E7D32; }
-    .color-red   { color: #C62828; }
-    .color-orange { color: #E65100; }
-    .color-blue  { color: #1565C0; }
-    .footer-text {
-        text-align: center;
-        color: #9E9E9E;
-        font-size: 0.8rem;
-        padding: 1rem;
-        border-top: 1px solid #EEEEEE;
-        margin-top: 2rem;
-    }
-    div[data-testid="stDownloadButton"] button {
-        width: 100%;
-        border-radius: 8px;
-        font-weight: 600;
-        padding: 0.6rem;
-    }
+    .info-card {background: #F8F9FA; border: 1px solid #E0E0E0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;}
+    .success-card {background: #E8F5E9; border: 1px solid #66BB6A; border-radius: 8px; padding: 0.8rem 1rem; color: #2E7D32; font-weight: 600; margin-bottom: 1rem;}
+    .warning-card {background: #FFF8E1; border: 1px solid #FFA726; border-radius: 8px; padding: 0.8rem 1rem; color: #E65100; font-weight: 600; margin-bottom: 1rem;}
+    .error-card {background: #FFEBEE; border: 1px solid #EF5350; border-radius: 8px; padding: 0.8rem 1rem; color: #C62828; font-weight: 600; margin-bottom: 1rem;}
+    .metric-box {background: white; border: 1px solid #E0E0E0; border-radius: 10px; padding: 1.2rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
+    .metric-value {font-size: 2.2rem; font-weight: 700; line-height: 1;}
+    .metric-label {font-size: 0.85rem; color: #666; margin-top: 0.3rem;}
+    .metric-sub {font-size: 1rem; font-weight: 600; margin-top: 0.2rem;}
+    .color-green {color: #2E7D32;}
+    .color-red {color: #C62828;}
+    .color-orange {color: #E65100;}
+    .color-blue {color: #1565C0;}
+    .footer-text {text-align: center; color: #9E9E9E; font-size: 0.8rem; padding: 1rem; border-top: 1px solid #EEEEEE; margin-top: 2rem;}
+    div[data-testid="stDownloadButton"] button {width: 100%; border-radius: 8px; font-weight: 600; padding: 0.6rem;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -150,33 +79,29 @@ def cleanup(path):
     except:
         pass
 
-# ?? Header ????????????????????????????????????????????????????????????????????
 st.markdown("""
 <div class="app-header">
-    <h1>&#128300; CHC-QA Pipeline</h1>
+    <h1>CHC-QA Pipeline</h1>
     <p>Cytology-Histology Correlation Quality Assurance | CAP CYP.06600 | Automated Laboratory Platform</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ?? Sidebar ???????????????????????????????????????????????????????????????????
 with st.sidebar:
     st.markdown("### Pipeline Settings")
-    mode = st.radio(
-        "Input mode",
-        ["Real lab data (two sheets)", "Evaluation data (pre-paired)"]
-    )
+    mode = st.radio("Input mode", ["Real lab data (two sheets)", "Evaluation data (pre-paired)"])
     st.markdown("---")
     window_days = st.slider("Pairing date window (days)", 30, 365, 180, 30)
     st.markdown("---")
     st.markdown("### About")
     st.markdown("""
-**CHC-QA Pipeline** automates cytology-histology 
+**CHC-QA Pipeline** automates cytology-histology
 correlation per CAP accreditation requirements.
 
 **Key features:**
 - LIS-agnostic data ingestion
 - LLM-assisted normalization
 - CAP-aligned classification
+- Birdsong guideline metrics
 - Professional report generation
 
 **CAP Requirement:** CYP.06600
@@ -184,17 +109,14 @@ correlation per CAP accreditation requirements.
     st.markdown("---")
     st.markdown("[GitHub](https://github.com/solomoneluanu/chc-qa-pipeline)")
 
-# ?? Upload section ????????????????????????????????????????????????????????????
 if "Real lab" in mode:
-
     st.markdown('<div class="step-header">Step 1 - Upload Laboratory Data</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="info-card">
-    Upload an Excel file with separate <b>Cytology</b> and <b>Histology</b> sheets, 
-    or upload two separate files. Column names are auto-detected from any LIS format 
+    Upload an Excel file with separate <b>Cytology</b> and <b>Histology</b> sheets,
+    or upload two separate files. Column names are auto-detected from any LIS format
     including CoPath, Epic Beaker, Sunquest, and Cerner.
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
     with col1:
@@ -212,31 +134,25 @@ if "Real lab" in mode:
     can_run   = has_excel or has_two
 
     if can_run:
-        # Clear previous results when new files uploaded
         for key in ["results", "classified_df", "output_excel", "output_pdf", "unmatched_df"]:
             if key in st.session_state:
                 del st.session_state[key]
+
         st.markdown('<div class="success-card">Files uploaded successfully. Auto-detecting columns...</div>', unsafe_allow_html=True)
 
         tmp_path = tmp_c = tmp_h = None
         try:
             if has_excel:
                 tmp_path = save_upload(excel_file, ".xlsx")
-                
-                # Validate file has correct sheets
-                import pandas as pd
                 xl = pd.ExcelFile(tmp_path)
                 if len(xl.sheet_names) < 2:
                     st.markdown("""
                     <div class="error-card">
-                    This file only has one sheet. Real lab mode requires an Excel file 
-                    with separate Cytology and Histology sheets.<br>
-                    If you have a pre-paired single sheet file use Evaluation mode instead.
-                    </div>
-                    """, unsafe_allow_html=True)
+                    This file only has one sheet. Real lab mode requires separate
+                    Cytology and Histology sheets. Use Evaluation mode for pre-paired data.
+                    </div>""", unsafe_allow_html=True)
                     cleanup(tmp_path)
                     st.stop()
-                
                 cyto_df, histo_df = load_combined_excel(tmp_path)
             else:
                 tmp_c = save_upload(cyto_file,  ".csv" if cyto_file.name.endswith(".csv") else ".xlsx")
@@ -270,10 +186,9 @@ else:
     st.markdown('<div class="step-header">Step 1 - Upload Evaluation Data</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="info-card">
-    Upload a pre-paired Excel or CSV file with <b>Cytology_Diagnosis</b> and 
+    Upload a pre-paired Excel or CSV file with <b>Cytology_Diagnosis</b> and
     <b>Histology_Diagnosis</b> columns.
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
     eval_file = st.file_uploader("Paired data file", type=["xlsx","xls","csv"], key="eval_upload", label_visibility="collapsed")
 
@@ -286,7 +201,6 @@ else:
         except Exception as e:
             st.error(f"Error: {str(e)}")
 
-# ?? Run Pipeline ??????????????????????????????????????????????????????????????
 st.markdown("---")
 st.markdown('<div class="step-header">Step 3 - Run Pipeline</div>', unsafe_allow_html=True)
 
@@ -300,7 +214,6 @@ if not run_ready:
 
 if run_ready:
     if st.button("Run CHC-QA Pipeline", type="primary", use_container_width=True):
-
         progress = st.progress(0)
         status   = st.empty()
 
@@ -371,7 +284,6 @@ if run_ready:
             st.error(f"Pipeline error: {str(e)}")
             st.exception(e)
 
-# ?? Results ???????????????????????????????????????????????????????????????????
 if "results" in st.session_state:
 
     results       = st.session_state["results"]
@@ -389,12 +301,10 @@ if "results" in st.session_state:
     within_one = results.get("agreement_within_one_pct", 0)
     ext_pv     = results.get("extended_pv_plus", 0) or 0
     pv_flag    = results.get("hsil_pv_interpretation", "")
-    key        = results.get("key_signals", {})
 
     st.markdown("---")
     st.markdown('<div class="step-header">QA Results</div>', unsafe_allow_html=True)
 
-    # CAP alert banner
     if major_rate > 10:
         st.markdown(f"""
         <div class="error-card">
@@ -423,7 +333,6 @@ if "results" in st.session_state:
 
     st.markdown("")
 
-    # Row 1 — Core metrics
     m1, m2, m3, m4 = st.columns(4)
     with m1:
         st.markdown(f"""
@@ -456,7 +365,6 @@ if "results" in st.session_state:
 
     st.markdown("")
 
-    # Row 2 — Birdsong metrics
     b1, b2, b3, b4 = st.columns(4)
     with b1:
         pv_color = "color-red" if hsil_pv < 60 else "color-green"
@@ -492,158 +400,16 @@ if "results" in st.session_state:
 
     st.markdown("")
 
-    # PV+ interpretation
     if pv_flag:
         st.info(f"PV+ Interpretation: {pv_flag}")
 
-    # Intergrade follow-up table
     intergrade = results.get("intergrade_table")
     if intergrade is not None and len(intergrade) > 0:
         st.markdown("---")
-        st.markdown('<div class="step-header">Intergrade Follow-Up Rates (Birdsong Section 8)</div>',
-                    unsafe_allow_html=True)
+        st.markdown('<div class="step-header">Intergrade Follow-Up Rates (Birdsong Section 8)</div>', unsafe_allow_html=True)
         st.caption("HSIL+ histology rates following each cytology category. Elevated rates may indicate systematic undercalling.")
         st.dataframe(intergrade, use_container_width=True, hide_index=True)
 
-    # Case detail
-    st.markdown("---")
-    st.markdown('<div class="step-header">Case Detail</div>', unsafe_allow_html=True)
-
-    display_cols = [c for c in [
-        "case_id", "MRN", "cyto_raw_diag", "histo_raw_diag",
-        "Cytology_Canonical", "Histology_Canonical",
-        "Concordance_Class", "Discordance_Subtype", "Severity"
-    ] if c in classified_df.columns]
-
-    st.dataframe(
-        classified_df[display_cols],
-        use_container_width=True,
-        height=400,
-        hide_index=True
-    )
-
-    if "unmatched_df" in st.session_state and len(st.session_state["unmatched_df"]) > 0:
-        n = len(st.session_state["unmatched_df"])
-        with st.expander(f"Unmatched Cases ({n}) - No histology pair found within {window_days} days"):
-            st.dataframe(st.session_state["unmatched_df"], use_container_width=True, hide_index=True)
-
-    # Downloads
-    st.markdown("---")
-    st.markdown('<div class="step-header">Download Reports</div>', unsafe_allow_html=True)
-    st.markdown("Reports are ready for laboratory meeting presentation and CAP inspection filing.")
-    st.markdown("")
-
-    d1, d2 = st.columns(2)
-    with d1:
-        excel_path = st.session_state.get("output_excel", "")
-        if os.path.exists(excel_path):
-            with open(excel_path, "rb") as f:
-                st.download_button(
-                    label="Download Excel QA Report",
-                    data=f.read(),
-                    file_name="chc_qa_report.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    use_container_width=True,
-                    type="primary"
-                )
-            st.caption("Color-coded case detail with all Birdsong metrics")
-
-    with d2:
-        pdf_path = st.session_state.get("output_pdf", "")
-        if os.path.exists(pdf_path):
-            with open(pdf_path, "rb") as f:
-                st.download_button(
-                    label="Download PDF QA Report",
-                    data=f.read(),
-                    file_name="chc_qa_report.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
-            st.caption("Full report with Birdsong metrics, intergrade analysis and CAP signals")
-
-    # Visualizations
-    st.markdown("---")
-    st.markdown('<div class="step-header">Visualizations</div>', unsafe_allow_html=True)
-
-    fig_files = [
-        ("concordance_bar.png",      "Concordance Distribution"),
-        ("discrepancy_buckets.png",  "Discrepancy Buckets"),
-        ("hsil_metrics.png",         "HSIL Correlation Metrics"),
-        ("confusion_matrix.png",     "Confusion Matrix"),
-        ("summary_dashboard.png",    "Summary Dashboard"),
-    ]
-
-    v1, v2 = st.columns(2)
-    for i, (fname, title) in enumerate(fig_files):
-        fpath = os.path.join(FIGURE_DIR, fname)
-        if os.path.exists(fpath):
-            with (v1 if i % 2 == 0 else v2):
-                st.markdown(f"**{title}**")
-                st.image(fpath, use_container_width=True)
-
-    st.markdown("""
-    <div class="footer-text">
-    CHC-QA Pipeline | Per ASC Birdsong Guideline 2017 | CAP CYP.06600 |
-    github.com/solomoneluanu/chc-qa-pipeline
-    </div>""", unsafe_allow_html=True)
-
-    # CAP status banner
-    if major_rate > 10:
-        st.markdown(f"""
-        <div class="error-card">
-        CAP Alert: Major discordance rate of {major_rate}% exceeds the CAP benchmark of less than 10%.
-        Corrective action documentation required per CYP.06600.
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div class="success-card">
-        CAP Status: Major discordance rate of {major_rate}% is within the CAP benchmark of less than 10%.
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Metric boxes
-    m1, m2, m3, m4 = st.columns(4)
-
-    with m1:
-        st.markdown(f"""
-        <div class="metric-box">
-            <div class="metric-value color-blue">{total}</div>
-            <div class="metric-label">Total Cases Analyzed</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with m2:
-        st.markdown(f"""
-        <div class="metric-box">
-            <div class="metric-value color-green">{concordant}</div>
-            <div class="metric-sub color-green">{conc_rate}%</div>
-            <div class="metric-label">Concordant Cases</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with m3:
-        color = "color-red" if major_rate > 10 else "color-orange"
-        st.markdown(f"""
-        <div class="metric-box">
-            <div class="metric-value {color}">{major}</div>
-            <div class="metric-sub {color}">{major_rate}%</div>
-            <div class="metric-label">Major Discordant</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with m4:
-        st.markdown(f"""
-        <div class="metric-box">
-            <div class="metric-value color-orange">{minor}</div>
-            <div class="metric-sub color-orange">{minor_rate}%</div>
-            <div class="metric-label">Minor Discordant</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("")
-
-    # Case detail
     st.markdown("---")
     st.markdown('<div class="step-header">Case Detail</div>', unsafe_allow_html=True)
 
@@ -659,9 +425,7 @@ if "results" in st.session_state:
         n = len(st.session_state["unmatched_df"])
         with st.expander(f"Unmatched Cases ({n}) - No histology pair found within {window_days} days"):
             st.dataframe(st.session_state["unmatched_df"], use_container_width=True, hide_index=True)
-            st.caption("Review these cases manually. No matching histology was found within the pairing window.")
 
-    # Downloads
     st.markdown("---")
     st.markdown('<div class="step-header">Download Reports</div>', unsafe_allow_html=True)
     st.markdown("Reports are ready for laboratory meeting presentation and CAP inspection filing.")
@@ -679,9 +443,9 @@ if "results" in st.session_state:
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     use_container_width=True,
                     type="primary",
-                    key="dl_excel_results"
+                    key="dl_excel_main"
                 )
-            st.caption("Color-coded case detail with summary metrics and concordance tables")
+            st.caption("Color-coded case detail with all Birdsong metrics")
 
     with d2:
         pdf_path = st.session_state.get("output_pdf", "")
@@ -693,19 +457,18 @@ if "results" in st.session_state:
                     file_name="chc_qa_report.pdf",
                     mime="application/pdf",
                     use_container_width=True,
-                    key="dl_pdf_results"
+                    key="dl_pdf_main"
                 )
-            st.caption("Professional report ready for CAP inspection documentation")
+            st.caption("Full report with Birdsong metrics, intergrade analysis and CAP signals")
 
-    # Visualizations
     st.markdown("---")
     st.markdown('<div class="step-header">Visualizations</div>', unsafe_allow_html=True)
 
     fig_files = [
-        ("concordance_bar.png",    "Concordance Distribution"),
-        ("discrepancy_buckets.png","Discrepancy Buckets"),
-        ("hsil_metrics.png",       "HSIL Correlation Metrics"),
-        ("confusion_matrix.png",   "Confusion Matrix"),
+        ("concordance_bar.png",     "Concordance Distribution"),
+        ("discrepancy_buckets.png", "Discrepancy Buckets"),
+        ("hsil_metrics.png",        "HSIL Correlation Metrics"),
+        ("confusion_matrix.png",    "Confusion Matrix"),
     ]
 
     v1, v2 = st.columns(2)
@@ -716,10 +479,8 @@ if "results" in st.session_state:
                 st.markdown(f"**{title}**")
                 st.image(fpath, use_container_width=True)
 
-    # Footer
     st.markdown("""
     <div class="footer-text">
-    CHC-QA Pipeline | Open Source Laboratory Quality Assurance Platform |
-    CAP Checklist CYP.06600 | github.com/solomoneluanu/chc-qa-pipeline
-    </div>
-    """, unsafe_allow_html=True)
+    CHC-QA Pipeline | Per ASC Birdsong Guideline 2017 | CAP CYP.06600 |
+    github.com/solomoneluanu/chc-qa-pipeline
+    </div>""", unsafe_allow_html=True)
