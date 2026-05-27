@@ -184,11 +184,11 @@ def compute_metrics(df: pd.DataFrame) -> dict:
     # ?? Birdsong Addition 1 ? PV+ interpretation flag ?????????????????????????
     if hsil_pv_plus is not None:
         if hsil_pv_plus > 95:
-            pv_flag = "HIGH ? May indicate excessive cytology undercall rate per Birdsong"
+            pv_flag = "HIGH - May indicate excessive cytology undercall rate per Birdsong"
         elif hsil_pv_plus >= 60:
-            pv_flag = "ACCEPTABLE ? Within CAP expected range (60-95%)"
+            pv_flag = "ACCEPTABLE - Within CAP expected range (60-95%)"
         else:
-            pv_flag = "LOW ? Below CAP target of 60%. Review HSIL overcall rate."
+            pv_flag = "LOW - Below CAP target of 60%. Review HSIL overcall rate."
     else:
         pv_flag = "INSUFFICIENT ? Not enough HSIL cases for meaningful PV+ calculation"
 

@@ -619,7 +619,7 @@ def plot_summary_dashboard(results: dict, output_dir: str) -> None:
     ax4.set_ylim(0, 1)
 
     fig.suptitle(
-        "CHC-QA Pipeline ? Quality Assurance Report",
+        "CHC-QA Pipeline | Quality Assurance Report",
         fontsize=14,
         fontweight="bold",
         color=COLORS["dark"],

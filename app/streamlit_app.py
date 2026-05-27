@@ -15,6 +15,7 @@ from src.chc_pipeline.metrics import compute_metrics
 from src.chc_pipeline.export import export_results
 from src.chc_pipeline.visualize import generate_all_figures
 from src.chc_pipeline.pdf_report import build_pdf_report
+from src.chc_pipeline.llm_insights import generate_qa_insights
 
 st.set_page_config(page_title="CHC-QA Pipeline", layout="wide")
 
@@ -261,11 +262,20 @@ if run_ready:
 
             export_results(classified_df, results, output_excel)
             generate_all_figures(results, classified_df, FIGURE_DIR)
+
+            # Generate LLM insights
+            status.info("Generating AI clinical commentary (this may take 2-3 minutes)...")
+            try:
+               insights = generate_qa_insights(results, classified_df)
+            except Exception:
+               insights = None
+
             build_pdf_report(
                 results=results,
                 figure_dir=FIGURE_DIR,
                 output_pdf=output_pdf,
-                summary_text=f"A total of {results.get('total_cases')} cases were analyzed."
+                summary_text=f"A total of {results.get('total_cases')} cases were analyzed.",
+                insights=insights
             )
 
             progress.progress(100)
