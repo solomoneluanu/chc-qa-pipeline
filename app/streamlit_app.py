@@ -99,8 +99,12 @@ st.markdown("""
 
 with st.sidebar:
     st.markdown("### Pipeline Settings")
-    mode = st.radio("Input mode", ["Real lab data (two sheets)", "Evaluation data (pre-paired)"])
-    st.markdown("---")
+    if not OLLAMA_AVAILABLE:
+        mode = "Evaluation data (pre-paired)"
+        st.radio("Input mode", ["Evaluation data (pre-paired)"], index=0,
+                 help="Real lab mode requires local Ollama. Use evaluation mode on cloud.")
+    else:
+        mode = st.radio("Input mode", ["Real lab data (two sheets)", "Evaluation data (pre-paired)"])
     window_days = st.slider("Pairing date window (days)", 30, 365, 180, 30)
     st.markdown("---")
     st.markdown("### About")
@@ -119,7 +123,7 @@ correlation per CAP accreditation requirements.
     """)
     st.markdown("---")
     if not OLLAMA_AVAILABLE:
-        st.warning("Ollama not detected. Demo mode active.")
+        st.info("Running on cloud. Please use Evaluation mode with a pre-paired file.")
         demo_mode = True
     else:
         demo_mode = st.toggle("Demo Mode", value=False,
