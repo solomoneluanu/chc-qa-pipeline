@@ -8,7 +8,7 @@ Every CAP-accredited cytopathology laboratory is required to correlate Pap test 
 
 ## Live Demo
 
-Try the app: https://chc-qa-pipeline.streamlit.app
+Try the app: YOUR_ACTUAL_URL_HERE
 
 ---
 
