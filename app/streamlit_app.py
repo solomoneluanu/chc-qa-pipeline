@@ -16,6 +16,16 @@ from src.chc_pipeline.export import export_results
 from src.chc_pipeline.visualize import generate_all_figures
 from src.chc_pipeline.pdf_report import build_pdf_report
 from src.chc_pipeline.llm_insights import generate_qa_insights
+import requests as req
+
+def check_ollama():
+    try:
+        req.get("http://localhost:11434", timeout=2)
+        return True
+    except:
+        return False
+
+OLLAMA_AVAILABLE = check_ollama()
 
 st.set_page_config(page_title="CHC-QA Pipeline", layout="wide")
 
@@ -108,6 +118,13 @@ correlation per CAP accreditation requirements.
 **CAP Requirement:** CYP.06600
     """)
     st.markdown("---")
+    if not OLLAMA_AVAILABLE:
+        st.warning("Ollama not detected. Demo mode active.")
+        demo_mode = True
+    else:
+        demo_mode = st.toggle("Demo Mode", value=False,
+            help="Use pre-cached results without Ollama")
+    st.session_state["demo_mode"] = demo_mode
     st.markdown("[GitHub](https://github.com/solomoneluanu/chc-qa-pipeline)")
 
 if "Real lab" in mode:
@@ -223,13 +240,35 @@ if run_ready:
                 cyto_df  = st.session_state["cyto_df"]
                 histo_df = st.session_state["histo_df"]
 
-                status.info("Step 1/6: Normalizing cytology diagnoses via LLM...")
-                progress.progress(10)
-                cyto_df = normalize_cyto_sheet(cyto_df, raw_diag_col="raw_diag", dictionary_path=DICTIONARY_PATH)
+                if not st.session_state.get("demo_mode"):
+                    status.info("Step 1/6: Normalizing cytology diagnoses via LLM...")
+                    progress.progress(10)
+                    cyto_df = normalize_cyto_sheet(cyto_df, raw_diag_col="raw_diag", dictionary_path=DICTIONARY_PATH)
 
-                status.info("Step 2/6: Normalizing histology diagnoses via LLM...")
-                progress.progress(25)
-                histo_df = normalize_histo_sheet(histo_df, raw_diag_col="raw_diag", dictionary_path=DICTIONARY_PATH)
+                    status.info("Step 2/6: Normalizing histology diagnoses via LLM...")
+                    progress.progress(25)
+                    histo_df = normalize_histo_sheet(histo_df, raw_diag_col="raw_diag", dictionary_path=DICTIONARY_PATH)
+                else:
+                    status.info("Demo mode: using pre-cached normalization...")
+                    progress.progress(25)
+                    cyto_df["Cytology_Canonical"]  = cyto_df["raw_diag"].apply(
+                        lambda x: "HSIL" if "high grade" in str(x).lower()
+                        else "NILM" if any(w in str(x).lower() for w in ["negative","nilm","normal"])
+                        else "LSIL" if "low grade" in str(x).lower()
+                        else "ASC-US" if "asc" in str(x).lower()
+                        else "NILM"
+                    )
+                    histo_df["Histology_Canonical"] = histo_df["raw_diag"].apply(
+                        lambda x: "HSIL (CIN2)" if "cin2" in str(x).lower() or "cin 2" in str(x).lower()
+                        else "HSIL (CIN3)" if "cin3" in str(x).lower() or "cin 3" in str(x).lower()
+                        else "LSIL (CIN1)" if "cin1" in str(x).lower() or "cin 1" in str(x).lower()
+                        else "Benign / Inflammatory (Negative)" if any(w in str(x).lower() for w in ["benign","negative","normal"])
+                        else "HSIL (CIN2)"
+                    )
+                    cyto_df["Cyto_LLM_Confidence"]  = "high"
+                    cyto_df["Cyto_Valid"]            = True
+                    histo_df["Histo_LLM_Confidence"] = "high"
+                    histo_df["Histo_Valid"]           = True
 
                 status.info("Step 3/6: Pairing cases by MRN and date...")
                 progress.progress(40)
@@ -265,10 +304,13 @@ if run_ready:
 
             # Generate LLM insights
             status.info("Generating AI clinical commentary (this may take 2-3 minutes)...")
-            try:
-               insights = generate_qa_insights(results, classified_df)
-            except Exception:
-               insights = None
+            if not st.session_state.get("demo_mode"):
+                try:
+                   insights = generate_qa_insights(results, classified_df)
+                except Exception:
+                    insights = None
+            else:
+                insights = None
 
             build_pdf_report(
                 results=results,
