@@ -123,8 +123,11 @@ correlation per CAP accreditation requirements.
     """)
     st.markdown("---")
     if not OLLAMA_AVAILABLE:
-        st.info("Running on cloud. Please use Evaluation mode with a pre-paired file.")
-        demo_mode = True
+        if os.environ.get("ANTHROPIC_API_KEY"):
+            st.success("Cloud mode: Claude Haiku active")
+        else:
+            st.warning("Add ANTHROPIC_API_KEY to Streamlit secrets for full functionality")
+        demo_mode = False
     else:
         demo_mode = st.toggle("Demo Mode", value=False,
             help="Use pre-cached results without Ollama")
