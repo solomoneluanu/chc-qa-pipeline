@@ -2,16 +2,16 @@
 import os
 import requests
 import pandas as pd
-import yaml
-
 
 def load_cyto_terms(dictionary_path: str) -> list:
+    import yaml
     with open(dictionary_path, "r") as f:
         mapping = yaml.safe_load(f)
     return list(set(mapping["cytology_raw_to_canonical"].values()))
 
 
 def load_histo_terms(dictionary_path: str) -> list:
+    import yaml
     with open(dictionary_path, "r") as f:
         mapping = yaml.safe_load(f)
     return list(set(mapping["histology_raw_to_canonical"].values()))
