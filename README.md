@@ -1,264 +1,165 @@
-readme = """# CHC-QA Pipeline
+# CHC-QA Pipeline
 
-> The first open source, LIS-agnostic, LLM-assisted automated cytology-histology correlation quality assurance platform.
+**Automated cytology–histology correlation for CAP-accredited laboratories.**
+Upload your LIS export. Get an inspection-ready QA report.
 
-Every CAP-accredited cytopathology laboratory is required to correlate Pap test results with biopsy results for the same patient -- a process called cytology-histology correlation (CHC). Today this takes 20-40 hours of manual work every month. CHC-QA Pipeline does it in under 10 minutes.
-
----
-
-## Live Demo
-
-Try the app: YOUR_ACTUAL_URL_HERE
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://chc--pipeline.streamlit.app/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue)](https://www.python.org/)
 
 ---
 
-## The Problem
+|  |  |  |
+|:--:|:--:|:--:|
+| **40 hrs → 8 min** | **98.4%** | **0.0%** |
+| monthly QA workload | normalization + classification accuracy | major discordance false-negative rate |
 
-Manual CHC workflows rely on Excel and VLOOKUP which fail on the messy free-text terminology that real laboratory information systems (LIS) produce. A lab coordinator spends hours every month cleaning data before any analysis can begin. CHC-QA Pipeline eliminates that manual cleaning step entirely.
-
-Manual process today:
-- Export from LIS
-- Clean column names
-- Standardize terminology
-- Run VLOOKUP
-- Fix VLOOKUP errors
-- Calculate metrics
-- Build charts
-- Write report
-- Time: 20-40 hours per month
-
-CHC-QA Pipeline:
-- Upload Excel file
-- Click Run
-- Download QA report
-- Time: 8 minutes first run, under 1 minute after
-- Accuracy: 98.4%
-- Major FN rate: 0.0%
+**→ [Try it now](https://chc--pipeline.streamlit.app/)** — no installation required.
 
 ---
 
-## Key Features
+<!-- Add a screenshot of the Streamlit app or a page of the PDF report here.
+     ![CHC-QA Pipeline report](docs/screenshot.png) -->
 
-- LIS-agnostic ingestion: works with any LIS export including CoPath, Epic Beaker, Sunquest, and Cerner. Column names are auto-detected.
-- LLM-assisted normalization: local Gemma3 maps any free-text diagnosis variant to canonical Bethesda/CIN terminology. Runs offline. HIPAA compliant.
-- Deterministic classification: CAP-aligned rules engine per ASC Birdsong Guideline 2017. Same input always produces same output.
-- Complete Birdsong metrics: all five Section 7 statistical calculations plus intergrade follow-up rates, extended PV+, agreement within one grade, and PV+ interpretation flag.
-- Professional reports: color-coded Excel workbook and multi-section PDF with CAP compliance signals, ready for lab meetings and inspection.
-- Modern visualizations: concordance distribution, discrepancy buckets with zone labels, HSIL metrics with CAP target line, confusion matrix with diagonal highlighting, summary dashboard.
-- Streamlit web UI: upload, run, download. No technical expertise required.
+## The problem
 
----
+Every CAP-accredited cytopathology lab must correlate Pap results with subsequent biopsies. The requirement is clear; the work is not. Real LIS exports arrive as messy free text — a dozen ways to write the same diagnosis — and Excel VLOOKUP breaks on all of them. So a coordinator spends the first several hours of every month cleaning data before any analysis can start, then rebuilds the same charts and the same report they built last month.
 
-## Evaluation Results
+CHC-QA Pipeline removes the cleaning step entirely. Upload the export, click Run, download the report.
 
-Evaluated on a gold standard test set of 204 cases (105 cytology + 99 histology + 54 classification pairs):
+## How it works
+
+```
+ingest  →  LLM normalization  →  pairing  →  deterministic classification  →  metrics  →  report
+```
+
+| Stage | What happens |
+|---|---|
+| **Ingest** | Auto-detects columns from any LIS export — CoPath, Epic Beaker, Sunquest, Cerner |
+| **Normalize** | Local Gemma3 maps free-text diagnoses to canonical Bethesda/CIN terminology |
+| **Pair** | MRN + date-window matching with three-tier fallback |
+| **Classify** | CAP-aligned rules engine, ASC Birdsong Guideline 2017 |
+| **Report** | Color-coded Excel workbook, 8-section PDF, publication-quality figures |
+
+> **Design principle:** LLM for semantic flexibility in normalization.
+> Deterministic rules for clinical accountability in classification.
+> **Never the other way around.**
+
+The LLM handles language, where variation is the problem. The rules engine handles classification, where reproducibility is the requirement — the same input always produces the same output, and every result is traceable to a published guideline.
+
+All LLM processing runs locally through Ollama. No patient data leaves the institution, and no vendor Business Associate Agreement is required.
+
+## Evaluation
+
+Measured against a gold-standard set of 204 cases — 105 cytology, 99 histology, 54 classification pairs.
 
 | Metric | Result |
-|--------|--------|
-| Cytology LLM Normalization | 97.1% |
-| Histology LLM Normalization | 98.0% |
-| Classification Accuracy | 100.0% |
-| Overall Average | 98.4% |
-| Major Discordance False Negative Rate | 0.0% |
-| High Confidence Prediction Accuracy | 99.0% |
-| Expected Calibration Error (Cyto) | 10.57% |
+|---|---|
+| Classification accuracy | **100.0%** |
+| Histology normalization | 98.0% |
+| Cytology normalization | 97.1% |
+| **Overall** | **98.4%** |
+| Major discordance, false-negative rate | **0.0%** |
+| High-confidence prediction accuracy | 99.0% |
+| Expected calibration error (cytology) | 10.57% |
 
-Key Finding: When the LLM returns medium confidence the prediction is incorrect in 100% of cases. Medium confidence outputs trigger mandatory manual review in clinical deployment.
+**The finding that shaped deployment:** when the model returns *medium* confidence, it is wrong in 100% of cases. Medium-confidence outputs therefore trigger mandatory manual review rather than flowing into the report. Calibration is a safety feature, not a statistic.
 
----
+## What you get
 
-## Architecture
+Concordance rates, discrepancy classification, HSIL PV+, and major-discordance case identification — the documentation CAP checklist item **CYP.06600** asks for.
+
+- **Excel** — color-coded case detail, concordance tables, all Birdsong metrics
+- **PDF** — 8 sections from executive summary through limitations
+- **Figures** — concordance distribution, discrepancy buckets, HSIL metrics against the CAP target line, confusion matrix, summary dashboard
+- **Unmatched cases** — every cytology case with no histology pair in the window
+
+<details>
+<summary><b>Birdsong metrics implemented</b> — full list</summary>
+
+Per ASC Clinical Practice Committee Birdsong Guideline 2017.
+
+**Section 5 — Tabulation**
+Exact agreement rate · minor disagreement rate · major disagreement rate · agreement within one grade · PV+
+
+**Section 7 — Statistical calculations**
+HSIL Pap tests with HSIL histology · HSIL Pap tests with minor discrepancies · HSIL Pap tests with major FP discrepancies · major FN cytology undercalls · PV+ for HSIL Pap tests · PV+ interpretation flag (HIGH / ACCEPTABLE / LOW) · extended PV+ (HSIL + ASC-H + AGC-NEO)
+
+**Section 8 — Intergrade follow-up rates**
+HSIL+ histology rates following ASC-US, ASC-H, LSIL, AGC, AGC-NEO, AGC-ECX, AGC-EMC
+
+</details>
+
+<details>
+<summary><b>Installation</b> — run it locally</summary>
+
+Requires Python 3.10+ and [Ollama](https://ollama.ai).
+
+```bash
+ollama pull gemma3:4b
+
+git clone https://github.com/solomoneluanu/chc-qa-pipeline.git
+cd chc-qa-pipeline
+conda create -n chc python=3.10 && conda activate chc
+pip install -r requirements.txt
+
+streamlit run app/streamlit_app.py
+```
+
+Command line:
+
+```bash
+python scripts/run_pipeline.py --mode real --input data/input-data/your_file.xlsx
+python scripts/evaluate_pipeline.py     # evaluation framework
+```
+
+**Input format.** Real-lab mode takes an Excel file with two sheets — cytology and histology. MRN, date, and diagnosis columns are auto-detected. Evaluation mode takes a pre-paired CSV or Excel with `Cytology_Diagnosis` and `Histology_Diagnosis` columns.
+
+</details>
+
+<details>
+<summary><b>Project structure</b></summary>
 
 ```
-ingest.py         LIS-agnostic data loading, auto column detection
-llm_normalizer.py Gemma3:4b via Ollama, free text to canonical term, persistent cache
-pairer.py         MRN + date window matching, 3-tier fallback logic
-normalize.py      Dictionary-based normalization
-classify.py       Deterministic rules engine, Birdsong Figure 1 grid
-metrics.py        Birdsong Section 5, 7, 8 metrics
-export.py         Excel workbook generation
-pdf_report.py     8-section PDF report generation
-visualize.py      Modern chart generation
+app/streamlit_app.py            web interface
+src/chc_pipeline/
+    ingest.py                   LIS-agnostic loading, column detection
+    llm_normalizer.py           Gemma3 normalization + persistent cache
+    pairer.py                   MRN/date pairing, 3-tier fallback
+    normalize.py                dictionary normalization
+    classify.py                 deterministic rules engine
+    metrics.py                  Birdsong Sections 5, 7, 8
+    export.py / pdf_report.py / visualize.py
+scripts/
+    run_pipeline.py             CLI runner
+    evaluate_pipeline.py        evaluation framework
+config/
+    diagnosis_dictionary.yaml   terminology mapping
+    discrepancy_rules.csv       classification rules
 ```
 
-Design principle: LLM for semantic flexibility in normalization. Deterministic rules for clinical accountability in classification. Never the other way around.
+</details>
 
----
+## Status
 
-## Birdsong Metrics Implemented
+Preprint on Research Square. Peer-reviewed submission in preparation, targeting *Journal of Pathology Informatics*.
 
-Per ASC Clinical Practice Committee Birdsong Guideline 2017:
-
-Section 5 - Tabulation:
-- Exact agreement rate
-- Minor disagreement rate
-- Major disagreement rate
-- Agreement within one grade
-- PV+
-
-Section 7 - Statistical Calculations:
-- Percent of HSIL Pap tests with HSIL histology
-- Percent of HSIL Pap tests with minor discrepancies
-- Percent of HSIL Pap tests with major FP discrepancies
-- Number of major FN cytology undercalls
-- PV+ for HSIL Pap tests
-- PV+ interpretation flag (HIGH / ACCEPTABLE / LOW)
-- Extended PV+ (HSIL + ASC-H + AGC-NEO)
-
-Section 8 - Intergrade Follow-Up Rates:
-- HSIL+ histology rates following ASC-US, ASC-H, LSIL, AGC, AGC-NEO, AGC-ECX, AGC-EMC
-
----
-
-## CAP Compliance
-
-This pipeline directly addresses CAP checklist requirement CYP.06600:
-
-"Does the laboratory have a cytologic-histologic correlation program?"
-
-The pipeline generates all required documentation including concordance rates, discrepancy classification, HSIL PV+, and major discordance case identification.
-
----
-
-## Installation
-
-Prerequisites:
-- Python 3.10+
-- Ollama installed and running (https://ollama.ai)
-- Gemma3:4b model pulled
-
-Install Ollama then pull the model:
-    ollama pull gemma3:4b
-
-Setup:
-    git clone https://github.com/solomoneluanu/chc-qa-pipeline.git
-    cd chc-qa-pipeline
-    conda create -n chc python=3.10
-    conda activate chc
-    pip install -r requirements.txt
-
-Run:
-    streamlit run app/streamlit_app.py
-
-Or run the pipeline directly:
-    python scripts/run_pipeline.py --mode real --input data/input-data/your_file.xlsx
-
-Run the evaluation framework:
-    python scripts/evaluate_pipeline.py
-
----
-
-## Input Format
-
-Real Lab Mode:
-Upload an Excel file with two sheets:
-- Sheet 1: Cytology data (MRN, date, diagnosis columns auto-detected)
-- Sheet 2: Histology data (MRN, date, diagnosis columns auto-detected)
-
-Column names are auto-detected. Works with any LIS export format.
-
-Evaluation Mode:
-Upload a pre-paired CSV or Excel with Cytology_Diagnosis and Histology_Diagnosis columns.
-
----
-
-## Output
-
-| Output | Format | Contents |
-|--------|--------|----------|
-| QA Report | Excel | Color-coded case detail, concordance tables, all Birdsong metrics |
-| QA Report | PDF | 8 sections: executive summary, concordance, buckets, HSIL metrics, intergrade analysis, key signals, figures, limitations |
-| Figures | PNG | Concordance distribution, discrepancy buckets, HSIL metrics, confusion matrix, summary dashboard |
-| Unmatched Cases | Excel | Cases with no histology pair found within the pairing window |
-
----
-
-## HIPAA Compliance
-
-All LLM processing runs locally via Ollama. No patient data leaves the institution. No Business Associate Agreement (BAA) required. No internet connection needed for core functionality.
-
----
-
-## Project Structure
-
-    chc-qa-pipeline/
-    app/
-        streamlit_app.py          Streamlit web interface
-    src/chc_pipeline/
-        ingest.py                 LIS-agnostic data loading
-        llm_normalizer.py         LLM normalization with cache
-        pairer.py                 Case pairing by MRN and date
-        normalize.py              Dictionary normalization
-        classify.py               Deterministic classification
-        metrics.py                Birdsong metrics computation
-        export.py                 Excel report generation
-        pdf_report.py             PDF report generation
-        visualize.py              Chart generation
-    scripts/
-        run_pipeline.py           Command line pipeline runner
-        evaluate_pipeline.py      Comprehensive evaluation framework
-    config/
-        diagnosis_dictionary.yaml Terminology mapping
-        discrepancy_rules.csv     Classification rules
-    data/
-        input-data/               Input files
-        output-data/              Generated reports and figures
-
----
-
-## Clinical Impact
-
-For a typical cytopathology laboratory processing 100-200 cases per month:
-
-| | Manual Process | CHC-QA Pipeline |
-|---|---|---|
-| Time per month | 20-40 hours | 8 minutes |
-| Annual cost | $16,000-$32,000 | $0 |
-| Reproducibility | Variable | 100% |
-| Audit trail | Manual | Automatic |
-| Major discordance detection | Human dependent | 0% FN rate |
-
----
-
-## Published Work
-
-Preprint available on Research Square.
-Peer-reviewed journal submission in preparation targeting Journal of Pathology Informatics.
-
----
+Evaluation was performed on a gold-standard test set; prospective validation in a live laboratory workflow has not yet been completed.
 
 ## Reference
 
-Birdsong GG, Walker JW. Gynecologic Cytology-Histology Correlation Guideline.
-ASC Bulletin. 2017;LIV(2):VIII-XIII.
-
----
+Birdsong GG, Walker JW. *Gynecologic Cytology–Histology Correlation Guideline.* ASC Bulletin. 2017;LIV(2):VIII–XIII.
 
 ## Author
 
-Solomon Eluanu, MD
-MD + MSc Artificial Intelligence in Medicine candidate
-University of Louisville
-
----
+**Solomon Eluanu, MD** — MD, MSc Artificial Intelligence in Medicine candidate, University of Louisville
 
 ## License
 
-MIT License -- free to use, modify, and deploy in any laboratory setting.
+MIT — free to use, modify, and deploy in any laboratory setting.
 
----
-
-## Citation
-
-If you use this tool in research or clinical practice please cite:
-
-    Eluanu S. CHC-QA Pipeline: An automated cytology-histology correlation
-    quality assurance platform. GitHub. 2026.
-    https://github.com/solomoneluanu/chc-qa-pipeline
-"""
-
-with open("README.md", "w", encoding="utf-8") as f:
-    f.write(readme)
-
-print("README.md written successfully")#   C H C - Q A   P i p e l i n e  
- 
+```
+Eluanu S. CHC-QA Pipeline: An automated cytology–histology correlation
+quality assurance platform. GitHub. 2026.
+https://github.com/solomoneluanu/chc-qa-pipeline
+```
