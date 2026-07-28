@@ -152,7 +152,7 @@ Birdsong GG, Walker JW. *Gynecologic Cytology–Histology Correlation Guideline.
 
 ## Author
 
-**Solomon Eluanu, MD** — MD, MSc Artificial Intelligence in Medicine candidate, University of Louisville
+**Solomon Tessega — MD, MSc Artificial Intelligence in Medicine candidate, University of Louisville
 
 ## License
 
